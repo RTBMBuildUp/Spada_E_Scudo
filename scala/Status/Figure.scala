@@ -1,6 +1,6 @@
 package Status
 
-abstract class Figure(_figure: Int) extends Ordered[Figure] {
+sealed abstract class Figure(_figure: Int) extends Ordered[Figure] {
   def figure: Int = _figure
 
   private def calc(func: (Int, Int) => Int, right: Figure): Figure = Figure(func(this.figure, right.figure))
@@ -24,3 +24,11 @@ object Figure {
   private class ImplFigure(_figure: Int) extends Figure(_figure)
 
 }
+
+case class Attack private(_figure: Int) extends Figure(_figure)
+
+case class Defend private(_figure: Int) extends Figure(_figure)
+
+case class HP private(_figure: Int) extends Figure(_figure)
+
+case class Speed private(_figure: Int) extends Figure(_figure)

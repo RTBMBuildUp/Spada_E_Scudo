@@ -2,14 +2,10 @@ package Character
 
 import Status._
 
-abstract class Character(_name: String, _status: Status) {
+abstract class Character(_name: String, _status: Status) extends Attackable with Defendable {
   def name: String = _name
 
   def status: Status = _status
-
-  def attack: Attack
-
-  def defend: Defend
 
   def isAlive: Boolean = Figure(0) < status.hp
 
