@@ -16,6 +16,7 @@ object Game {
           val defender = characterList.filter(_ != turnCharacter).head
 
           println(defender.reduceHP(calcDamage(turnCharacter, defender)))
+
           play(
             characterMap + (defender.name -> defender.reduceHP(calcDamage(turnCharacter, defender))),
             turnQueue.tail enqueue turnCharacter
