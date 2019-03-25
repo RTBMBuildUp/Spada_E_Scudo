@@ -3,7 +3,7 @@ package Status
 import Character.Identifilable
 
 abstract class Status(elem: List[Figure]) {
-  val map = (Utility.lst ::: elem.toList).foldLeft(Map[String, Figure]())((res, elem) => res + (elem.identificationString -> elem))
+  val map = (Utility.lst ::: elem.toList).foldLeft(Map[String, Figure]())((res, elem) => res + (Utility.identificationString(elem) -> elem))
 
   private def get[T <: Figure](identifilable: Identifilable, apply: Int => T): T = apply(map(identifilable.identificationString).figure)
 
