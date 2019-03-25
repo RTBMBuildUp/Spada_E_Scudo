@@ -4,9 +4,9 @@ import Equipment.Equipment
 import Status.{Attack, Defend, Figure, Status}
 
 class Person(_name: String, _stat: Status, equipment: Equipment) extends Character(_name, _stat) {
-  def attack: Attack = equipment.weapon.correct(_stat.atk)
+  def attack: Attack = equipment.weapon.correct(Attack(_stat.atk.figure))
 
-  def defend: Defend = equipment.armor.correct(_stat.defe)
+  def defend: Defend = equipment.armor.correct(Defend(_stat.defe.figure))
 
   override def reduceHP(receivedForce: Figure): Character = Person(name, super.reduceHP(receivedForce).status, equipment)
 

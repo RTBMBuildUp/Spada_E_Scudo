@@ -1,20 +1,26 @@
 package Status
 
-abstract class Status(_hp: HP, _atk: Attack, _def: Defend, _speed: Speed, _chargeTime: ChargeTime = ChargeTime(0)) {
-  def hp: HP = _hp
+import Character.Identifilable
 
-  def atk: Attack = _atk
+abstract class Status(elem: List[Figure]) {
+  val map = (Utility.lst ::: elem.toList).foldLeft(Map[String, Figure]())((res, elem) => res + (elem.identificationString -> elem))
 
-  def defe: Defend = _def
+  private def get[T <: Figure](identifilable: Identifilable, apply: Int => T): T = apply(map(identifilable.identificationString).figure)
 
-  def speed: Speed = _speed
+  def hp: HP = get[HP](HP, HP.apply)
 
-  def chargeTime: ChargeTime = _chargeTime
+  def atk: Attack = get[Attack](Attack, Attack.apply)
+
+  def defe: Defend = get[Defend](Defend, Defend.apply)
+
+  def speed: Speed = get[Speed](Speed, Speed.apply)
+
+  def chargeTime: ChargeTime = get[ChargeTime](ChargeTime, ChargeTime.apply)
 }
 
 object Status {
-  def apply(_hp: HP, _atk: Attack, _def: Defend, _speed: Speed, _chargeTime: ChargeTime = ChargeTime(0)): Status = new ImplStatus(_hp, _atk, _def, _speed, _chargeTime)
+  def apply(elem: List[Figure]): Status = new ImplStatus(elem)
 
-  private class ImplStatus(_hp: HP, _atk: Attack, _def: Defend, _speed: Speed, _chargeTime: ChargeTime = ChargeTime(0)) extends Status(_hp, _atk, _def, _speed, _chargeTime)
+  private class ImplStatus(elem: List[Figure]) extends Status(elem)
 }
 
