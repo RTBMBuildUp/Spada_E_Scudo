@@ -2,7 +2,7 @@ package Status
 
 import Character.Identifilable
 
-abstract class Status(elem: List[Figure]) {
+class Status(elem: List[Figure]) {
   val map = (Utility.lst ::: elem.toList).foldLeft(Map[String, Figure]())((res, elem) => res + (Utility.identificationString(elem) -> elem))
 
   private def get[T <: Figure](identifilable: Identifilable, apply: Int => T): T = apply(map(identifilable.identificationString).figure)
@@ -16,11 +16,11 @@ abstract class Status(elem: List[Figure]) {
   def speed: Speed = get[Speed](Speed, Speed.apply)
 
   def chargeTime: ChargeTime = get[ChargeTime](ChargeTime, ChargeTime.apply)
+
+  override def toString: String = map("hp").toString
 }
 
 object Status {
-  def apply(elem: List[Figure]): Status = new ImplStatus(elem)
-
-  private class ImplStatus(elem: List[Figure]) extends Status(elem)
+  def apply(elem: List[Figure]): Status = new Status(elem)
 }
 

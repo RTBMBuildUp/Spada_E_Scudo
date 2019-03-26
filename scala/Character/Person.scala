@@ -8,7 +8,7 @@ class Person(_name: String, _stat: Status, equipment: Equipment) extends Charact
 
   def defend: Defend = equipment.armor.correct(Defend(_stat.defe.figure))
 
-  override def reduceHP(receivedForce: Figure): Character = Person(name, super.reduceHP(receivedForce).status, equipment)
+  override def flucstrateStatus(identifilable: Identifilable, func: Figure => Figure): Character = Person(name, super.flucstrateStatus(identifilable, func).status, equipment)
 
   override def toString: String = this.name
 

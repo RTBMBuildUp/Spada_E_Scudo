@@ -2,8 +2,8 @@ package Status
 
 import Character.Identifilable
 
-sealed abstract class Figure(_figure: Int) extends Ordered[Figure] {
-  if (_figure < 0) Figure(0)
+sealed abstract class Figure(private var _figure: Int) extends Ordered[Figure] {
+  _figure = if (_figure < 0) 0 else _figure
 
   def figure: Int = _figure
 
@@ -40,18 +40,6 @@ case class ChargeTime private(_figure: Int) extends Figure(_figure) {
   def reset: ChargeTime = ChargeTime(0)
 }
 
-object Utility {
-  def lst: List[Figure] = List[Figure](HP(0), Attack(0), Defend(0), Speed(0), ChargeTime(0))
-
-  def identificationString(figure: Figure): String = (figure match {
-    case _: HP => HP
-    case _: Attack => Attack
-    case _: Defend => Defend
-    case _: Speed => Speed
-    case _: ChargeTime => ChargeTime
-  }).identificationString
-}
-
 case object HP extends Identifilable {
   override def identificationString: String = "hp"
 }
@@ -71,5 +59,3 @@ case object Speed extends Identifilable {
 case object ChargeTime extends Identifilable {
   override def identificationString: String = "ct"
 }
-
-

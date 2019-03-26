@@ -7,15 +7,15 @@ abstract class Character(_name: String, _status: Status) extends Attackable with
 
   def status: Status = _status
 
-  def isAlive: Boolean = HP(0) != status.hp
+  def isAlive: Boolean = HP(0) < status.hp
 
-  def flucstrateStatus(flucstrateFunc: Status => Status): Character = Character(_name, flucstrateFunc(status))
-
-  def reduceHP(receivedForce: Figure): Character = {
-    flucstrateStatus((stat: Status) => Status((HP((status.hp - receivedForce).figure) :: stat.map.unzip._2.toList.reverse).reverse))
-//    Character(_name, Status(HP((status.hp - receivedForce).figure)))
+  def flucstrateStatus(identifilable: Identifilable, func: Figure => Figure): Character = {
+    val lst = status.map.unzip._2.toList
+    Character(
+      _name,
+      Status((func(status.map(identifilable.identificationString)) :: lst.reverse).reverse)
+    )
   }
-
 }
 
 object Character {

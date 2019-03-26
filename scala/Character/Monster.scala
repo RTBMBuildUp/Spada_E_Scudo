@@ -7,7 +7,9 @@ class Monster(_name: String, _status: Status) extends Character(_name, _status) 
 
   def defend: Defend = Defend(status.defe.figure)
 
-  override def reduceHP(receivedForce: Figure): Character = Monster(name, super.reduceHP(receivedForce).status)
+  override def flucstrateStatus(identifilable: Identifilable, func: Figure => Figure): Character =
+    Monster(name, super.flucstrateStatus(identifilable, func).status)
+
 }
 
 

@@ -11,8 +11,6 @@ object Main {
 
     def twinHits(atk: Figure): Attack = Attack(atk.figure * 2)
 
-    //arusu.flucstrateStatus()
-
     Game.start(List(arusu, kifa))
   }
 }
