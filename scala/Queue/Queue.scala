@@ -1,4 +1,4 @@
-package BS
+package Queue
 
 class Queue[T] private (
                                private var leading: List[T],

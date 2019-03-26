@@ -1,11 +1,14 @@
 package BS
 
-import Status.{Figure, HP}
+import Status.{ChargeTime, Figure, HP}
 import Character.{Attackable, Character, Defendable}
+import Queue.Queue
 
 object Game {
   def start(characterList: List[Character]): Unit = {
     def play(characterMap: Map[String, Character], turnQueue: Queue[Character]): Unit = {
+
+
       def calcDamage(attacker: Character, Defender: Character): Figure = characterMap(attacker.name).attack - characterMap(Defender.name).defend
 
       def reduceHP(hp: Figure, reduceFigure: Figure): HP = HP((hp - reduceFigure).figure)
@@ -20,7 +23,13 @@ object Game {
           println(defender.flucstrateStatus(HP, (hp: Figure) => reduceHP(hp, calcDamage(turnCharacter, defender))).status)
 
           play(
-            characterMap + (defender.name -> defender.flucstrateStatus(HP, (hp: Figure) => reduceHP(hp, calcDamage(turnCharacter, defender)))),
+            characterMap + (
+                    defender.name ->
+                            defender.flucstrateStatus(
+                              HP,
+                              (hp: Figure) => reduceHP(hp, calcDamage(turnCharacter, defender))
+                            )
+                    ),
             turnQueue.tail enqueue turnCharacter
           )
 
