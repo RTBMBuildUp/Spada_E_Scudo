@@ -1,6 +1,6 @@
-import BS.Game
 import Character.Person
 import Equipment.Equipment
+import GameManage.Game
 import Status.{Figure, _}
 
 object Main {

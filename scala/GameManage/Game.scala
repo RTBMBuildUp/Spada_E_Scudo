@@ -1,13 +1,13 @@
-package BS
+package GameManage
 
-import Status.{Figure, HP}
 import Character.{Attackable, Character, Defendable}
-import Queue.{Queue, Utility}
+import Queue.Queue
+import Status.{Figure, HP}
 
 object Game {
   def start(characterList: List[Character]): Unit = {
     def play(characterMap: Map[String, Character], turnQueue: Queue[Character]): Unit = {
-      def calcDamage(attacker: Character, Defender: Character): Figure = characterMap(attacker.name).attack - characterMap(Defender.name).defend
+      def calcDamage(attacker: Attackable, defender: Defendable): Figure = attacker.attack - defender.defend
 
       def reduceHP(hp: Figure, reduceFigure: Figure): HP = HP((hp - reduceFigure).figure)
 
