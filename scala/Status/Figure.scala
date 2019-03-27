@@ -36,10 +36,6 @@ case class HP private(_figure: Int) extends Figure(_figure)
 
 case class Speed private(_figure: Int) extends Figure(_figure)
 
-case class ChargeTime private(_figure: Int) extends Figure(_figure) {
-  def reset: ChargeTime = ChargeTime(0)
-}
-
 case object HP extends Identifilable {
   override def identificationString: String = "hp"
 }
@@ -54,8 +50,4 @@ case object Defend extends Identifilable {
 
 case object Speed extends Identifilable {
   override def identificationString: String = "sp"
-}
-
-case object ChargeTime extends Identifilable {
-  override def identificationString: String = "ct"
 }

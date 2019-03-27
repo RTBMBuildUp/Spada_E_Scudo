@@ -1,14 +1,12 @@
 package BS
 
-import Status.{ChargeTime, Figure, HP}
+import Status.{Figure, HP}
 import Character.{Attackable, Character, Defendable}
-import Queue.Queue
+import Queue.{Queue, Utility}
 
 object Game {
   def start(characterList: List[Character]): Unit = {
     def play(characterMap: Map[String, Character], turnQueue: Queue[Character]): Unit = {
-
-
       def calcDamage(attacker: Character, Defender: Character): Figure = characterMap(attacker.name).attack - characterMap(Defender.name).defend
 
       def reduceHP(hp: Figure, reduceFigure: Figure): HP = HP((hp - reduceFigure).figure)

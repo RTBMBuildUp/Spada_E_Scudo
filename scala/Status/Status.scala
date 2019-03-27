@@ -15,8 +15,6 @@ class Status(elem: List[Figure]) {
 
   def speed: Speed = get[Speed](Speed, Speed.apply)
 
-  def chargeTime: ChargeTime = get[ChargeTime](ChargeTime, ChargeTime.apply)
-
   override def toString: String = map("hp").toString
 }
 
