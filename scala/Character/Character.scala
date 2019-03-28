@@ -11,6 +11,7 @@ abstract class Character(_name: String, _status: Status) extends Attackable with
 
   def flucstrateStatus(identifilable: Identifilable, func: Figure => Figure): Character = {
     val lst = status.map.unzip._2.toList
+
     Character(
       _name,
       Status((func(status.map(identifilable.identificationString)) :: lst.reverse).reverse)

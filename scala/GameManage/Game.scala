@@ -1,16 +1,13 @@
 package GameManage
 
-import Character.{Attackable, Character, Defendable}
+import Character.Character
 import Queue.Queue
-import Status.{Figure, HP}
+import Status.{Figure, HP, Utility}
+
 
 object Game {
   def start(characterList: List[Character]): Unit = {
     def play(characterMap: Map[String, Character], turnQueue: Queue[Character]): Unit = {
-      def calcDamage(attacker: Attackable, defender: Defendable): Figure = attacker.attack - defender.defend
-
-      def reduceHP(hp: Figure, reduceFigure: Figure): HP = HP((hp - reduceFigure).figure)
-
       val characterList = characterMap.toList.foldLeft(List[Character]())((res, elem) => elem._2 :: res)
 
       characterList.filter(!_.isAlive) match {
@@ -18,14 +15,14 @@ object Game {
           val turnCharacter = turnQueue.head
           val defender = characterList.filter(_ != turnCharacter).head
 
-          println(defender.flucstrateStatus(HP, (hp: Figure) => reduceHP(hp, calcDamage(turnCharacter, defender))).status)
+          println(defender.flucstrateStatus(HP, (hp: Figure) => HP(hp - turnCharacter.attack - defender.defend)).status)
 
           play(
             characterMap + (
                     defender.name ->
                             defender.flucstrateStatus(
                               HP,
-                              (hp: Figure) => reduceHP(hp, calcDamage(turnCharacter, defender))
+                              (hp: Figure) => HP(hp - (turnCharacter.attack - defender.defend))
                             )
                     ),
             turnQueue.tail enqueue turnCharacter
@@ -36,7 +33,7 @@ object Game {
     }
 
     val characterMap = characterList.foldLeft(Map[String, Character]())((res, elem) => res + (elem.name -> elem))
-    val turnQueue = Queue[Character](characterList.sortWith((l, r) => l.status.speed < r.status.speed))
+    val turnQueue = Queue(characterList.sortWith((l, r) => l.status.speed < r.status.speed))
 
     play(characterMap, turnQueue)
   }
