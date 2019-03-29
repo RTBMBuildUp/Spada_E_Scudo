@@ -5,7 +5,7 @@ import Character.Identifilable
 class Status(elem: List[Figure]) {
   val map = (Utility.lst ::: elem.toList).foldLeft(Map[String, Figure]())((res, elem) => res + (Utility.identificationString(elem) -> elem))
 
-  private def get[T <: Figure](identifilable: Identifilable, apply: Int => T): T = apply(map(identifilable.identificationString).figure)
+  private def get[T <: Figure](identifilable: Identifilable, apply: Int => T): T = apply(map(identifilable.identificationString))
 
   def hp: HP = get[HP](HP, HP.apply)
 

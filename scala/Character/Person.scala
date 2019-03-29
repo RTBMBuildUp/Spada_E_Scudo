@@ -4,9 +4,9 @@ import Equipment.Equipment
 import Status.{Attack, Defend, Figure, Status}
 
 class Person(_name: String, _stat: Status, equipment: Equipment) extends Character(_name, _stat) {
-  def attack: Attack = equipment.weapon.correct(Attack(_stat.atk.figure))
+  def attack: Attack = equipment.weapon.correct(Attack(_stat.atk))
 
-  def defend: Defend = equipment.armor.correct(Defend(_stat.defe.figure))
+  def defend: Defend = equipment.armor.correct(Defend(_stat.defe))
 
   override def flucstrateStatus(identifilable: Identifilable, func: Figure => Figure): Character = Person(name, super.flucstrateStatus(identifilable, func).status, equipment)
 

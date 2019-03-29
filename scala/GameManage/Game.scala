@@ -1,8 +1,8 @@
 package GameManage
 
-import Character.Character
+import Character.{Character, Monster}
 import Queue.Queue
-import Status.{Figure, HP, Utility}
+import Status.{Figure, HP, Status, Utility}
 
 
 object Game {
