@@ -1,14 +1,14 @@
 package GameManage
 
-import Character.{Character, Monster}
+import Creature.{Creature, Monster}
 import Queue.Queue
 import Status.{Figure, HP, Status, Utility}
 
 
 object Game {
-  def start(characterList: List[Character]): Unit = {
-    def play(characterMap: Map[String, Character], turnQueue: Queue[Character]): Unit = {
-      val characterList = characterMap.toList.foldLeft(List[Character]())((res, elem) => elem._2 :: res)
+  def start(characterList: List[Creature]): Unit = {
+    def play(characterMap: Map[String, Creature], turnQueue: Queue[Creature]): Unit = {
+      val characterList = characterMap.toList.foldLeft(List[Creature]())((res, elem) => elem._2 :: res)
 
       characterList.filter(!_.isAlive) match {
         case deadManLst if deadManLst.isEmpty =>
@@ -32,7 +32,7 @@ object Game {
       }
     }
 
-    val characterMap = characterList.foldLeft(Map[String, Character]())((res, elem) => res + (elem.name -> elem))
+    val characterMap = characterList.foldLeft(Map[String, Creature]())((res, elem) => res + (elem.name -> elem))
     val turnQueue = Queue(characterList.sortWith((l, r) => l.status.speed < r.status.speed))
 
     play(characterMap, turnQueue)

@@ -1,4 +1,4 @@
-import Character.Person
+import Creature.Person
 import Equipment.Equipment
 import GameManage.Game
 import Status.{Figure, _}

@@ -1,9 +1,9 @@
 package GameManage
 
-import Character.Character
+import Creature.Creature
 
 class Player {
-  def order[T <: Character](character: T, action: T => Map[String, Character]): Map[String, Character] = action(character)
+  def order[T <: Creature](character: T, map: Map[String, Creature], action: Action): Map[String, Creature] = action.activated(character, map)
 }
 
 object Player {

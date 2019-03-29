@@ -1,14 +1,14 @@
-package Character
+package Creature
 
 import Equipment.Equipment
 import Status.{Attack, Defend, Figure, Status}
 
-class Person(_name: String, _stat: Status, equipment: Equipment) extends Character(_name, _stat) {
+class Person(_name: String, _stat: Status, equipment: Equipment) extends Creature(_name, _stat) {
   def attack: Attack = equipment.weapon.correct(Attack(_stat.atk))
 
   def defend: Defend = equipment.armor.correct(Defend(_stat.defe))
 
-  override def flucstrateStatus(identifilable: Identifilable, func: Figure => Figure): Character = Person(name, super.flucstrateStatus(identifilable, func).status, equipment)
+  override def flucstrateStatus(identifilable: Identifilable, func: Figure => Figure): Creature = Person(name, super.flucstrateStatus(identifilable, func).status, equipment)
 
   override def toString: String = this.name
 

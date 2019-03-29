@@ -1,6 +1,6 @@
 package Status
 
-import Character.Identifilable
+import Creature.Identifilable
 
 sealed class Figure(private var _figure: Int) extends Ordered[Figure] {
   _figure = if (_figure < 0) 0 else _figure

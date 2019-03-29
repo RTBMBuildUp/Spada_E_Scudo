@@ -1,4 +1,4 @@
-package Character
+package Creature
 
 import Status.Defend
 

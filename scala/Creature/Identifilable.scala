@@ -1,4 +1,4 @@
-package Character
+package Creature
 
 trait Identifilable {
   def identificationString: String
