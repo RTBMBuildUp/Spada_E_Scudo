@@ -3,29 +3,22 @@ package GameManage
 import Creature.{Creature, Monster}
 import Queue.Queue
 import Status.{Figure, HP, Status}
+import Utility.CreatureUtility
 
 
 object Game {
   def start(creatureList: List[Creature]): Unit = {
     def play(creatureMap: Map[String, Creature], turnQueue: Queue[Creature]): Unit = {
       val creatureList = creatureMap.toList.foldLeft(List[Creature]())((res, elem) => elem._2 :: res)
+      val res = Player.apply.order(turnQueue.head, Order.Attack, creatureMap)
+
+      println(res)
 
       creatureList.filter(!_.isAlive) match {
         case deadManLst if deadManLst.isEmpty =>
-          val turnCreature = turnQueue.head
-          val defender = creatureList.filter(_ != turnCreature).head
-
-          println(defender.flucstrateStatus(HP, (hp: Figure) => HP(hp - turnCreature.attack - defender.defend)).status)
-
           play(
-            creatureMap + (
-                    defender.name ->
-                            defender.flucstrateStatus(
-                              HP,
-                              (hp: Figure) => HP(hp - (turnCreature.attack - defender.defend))
-                            )
-                    ),
-            turnQueue.tail enqueue turnCreature
+            res,
+            turnQueue.tail enqueue turnQueue.head
           )
 
         case deadManLst => deadManLst.foreach(deadMan => println(deadMan + " is Dead"))
