@@ -1,6 +1,5 @@
 package Status
 
-import Creature.Identifilable
 import Utility.StatusUtility
 
 class Status(lst: List[Figure]) {

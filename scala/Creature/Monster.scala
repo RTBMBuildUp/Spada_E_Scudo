@@ -1,6 +1,6 @@
 package Creature
 
-import Status.{Attack, Defend, Figure, Status}
+import Status._
 
 class Monster(_name: String, _status: Status) extends Creature(_name, _status) {
   def attack: Attack = Attack(status.atk)

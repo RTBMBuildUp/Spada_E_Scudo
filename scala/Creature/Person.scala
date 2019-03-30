@@ -1,7 +1,7 @@
 package Creature
 
 import Equipment.Equipment
-import Status.{Attack, Defend, Figure, Status}
+import Status._
 
 class Person(_name: String, _stat: Status, equipment: Equipment) extends Creature(_name, _stat) {
   def attack: Attack = equipment.weapon.correct(Attack(_stat.atk))
