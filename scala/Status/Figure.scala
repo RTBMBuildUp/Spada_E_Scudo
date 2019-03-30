@@ -10,12 +10,16 @@ sealed class Figure(private var _figure: Int) extends Ordered[Figure] {
   private def calc(func: (Int, Int) => Int, right: Figure): Figure = Figure(func(this.figure, right.figure))
 
   def +(that: Figure): Figure = calc((l, r) => l + r, that)
+  def +(that: Int): Figure = this + Figure(that)
 
   def -(that: Figure): Figure = calc((l, r) => l - r, that)
+  def -(that: Int): Figure = this - Figure(that)
 
   def *(that: Figure): Figure = calc((l, r) => l * r, that)
+  def *(that: Int): Figure = this * Figure(that)
 
   def /(that: Figure): Figure = calc((l, r) => l / r, that)
+  def /(that: Int): Figure = this / Figure(that)
 
   override def compare(that: Figure): Int = this.figure - that.figure
 
