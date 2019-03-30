@@ -3,7 +3,7 @@ package GameManage
 import Creature.Creature
 
 class Player {
-  def order[T <: Creature](character: T, map: Map[String, Creature], action: Action): Map[String, Creature] = action.activated(character, map)
+  def order[T <: Creature](creature: T, map: Map[String, Creature], action: Action): Map[String, Creature] = action.activated(creature, map)
 }
 
 object Player {

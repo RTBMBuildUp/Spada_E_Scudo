@@ -1,7 +1,5 @@
 package Equipment
 
-import BS._
-
 abstract class Equipment(_weapon: Weapon, _armor: Armor) {
   def weapon: Weapon = _weapon
   def armor: Armor = _armor

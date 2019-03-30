@@ -1,9 +1,10 @@
 package Status
 
 import Creature.Identifilable
+import Utility.StatusUtility
 
-class Status(elem: List[Figure]) {
-  val map = (Utility.lst ::: elem.toList).foldLeft(Map[String, Figure]())((res, elem) => res + (Utility.identificationString(elem) -> elem))
+class Status(lst: List[Figure]) {
+  val map: Map[String, Figure] = (StatusUtility.lst ::: lst).foldLeft(Map[String, Figure]())((res, elem) => res + (StatusUtility.identificationString(elem) -> elem))
 
   private def get[T <: Figure](identifilable: Identifilable, apply: Figure => T): T = apply(map(identifilable.identificationString))
 

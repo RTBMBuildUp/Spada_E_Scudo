@@ -17,6 +17,8 @@ abstract class Creature(_name: String, _status: Status) extends Attackable with 
       Status((func(status.map(identifilable.identificationString)) :: lst.reverse).reverse)
     )
   }
+
+  def damage(attacker: Attackable): Creature = flucstrateStatus(HP, (hp: Figure) => HP(hp - (attacker.attack - defend)))
 }
 
 object Creature {
