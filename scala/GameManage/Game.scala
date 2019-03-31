@@ -12,6 +12,7 @@ object Game {
       val creatureList = creatureMap.toList.foldLeft(List[Creature]())((res, elem) => elem._2 :: res)
       val res = Player.apply.order(turnQueue.head, Order.Attack, creatureMap)
 
+
       println(res)
 
       creatureList.filter(!_.isAlive) match {
