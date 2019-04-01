@@ -4,25 +4,24 @@ import Creature.Creature
 import Status.{HP, Status}
 
 trait Phase {
-  def start(player: Player, map: Map[String, Creature]): Map[String, Creature]
+  def start(player: Commander, map: Map[String, Creature]): Map[String, Creature]
   def end(map: Map[String, Creature]): Map[String, Creature]
 }
 
 case object CombatPhase extends Phase {
-  override def start(player: Player, map: Map[String, Creature]): Map[String, Creature] = {
-    def order(creature: Creature): Map[String, Creature] = {
+  override def start(player: Commander, map: Map[String, Creature]): Map[String, Creature] = {
+    def command(creature: Creature): Map[String, Creature] = {
       def declear(): Action = readLine() match {
-        case Order.Attack.identificationString => Order.Attack
-        case Order.Defend.identificationString => Order.Defend
+        case message if message == Choices.Attack.identificationString => Choices.Attack
+        case message if message == Choices.Defend.identificationString => Choices.Defend
+        case _ => declear()
       }
 
       println("you can choose attack or defence")
-      player.order(creature, declear(), map)
+      player.command(creature, declear(), map)
     }
 
-    val creatureLst = map.unzip._2.toList
-
-    map.foldLeft(Map[String, Creature]())((res, elem) => res ++ order(elem._2))
+    map.foldLeft(Map[String, Creature]())((res, elem) => res ++ command(elem._2))
   }
 
   override def end(map: Map[String, Creature]): Map[String, Creature] = ???

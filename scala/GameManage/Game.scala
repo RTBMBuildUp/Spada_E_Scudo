@@ -10,15 +10,11 @@ object Game {
   def start(creatureList: List[Creature]): Unit = {
     def play(creatureMap: Map[String, Creature], turnQueue: Queue[Creature]): Unit = {
       val creatureList = creatureMap.toList.foldLeft(List[Creature]())((res, elem) => elem._2 :: res)
-      val res = Player.apply.order(turnQueue.head, Order.Attack, creatureMap)
-
-
-      println(res)
 
       creatureList.filter(!_.isAlive) match {
         case deadManLst if deadManLst.isEmpty =>
           play(
-            res,
+            CombatPhase.start(Commander.apply, creatureMap),
             turnQueue.tail enqueue turnQueue.head
           )
 
