@@ -9,16 +9,18 @@ trait Phase {
 }
 
 case object CombatPhase extends Phase {
-  override def start(player: Commander, map: Map[String, Creature]): Map[String, Creature] = {
+  override def start(commander: Commander, map: Map[String, Creature]): Map[String, Creature] = {
     def command(creature: Creature): Map[String, Creature] = {
-      def declear(): Action = readLine() match {
-        case message if message == Choices.Attack.identificationString => Choices.Attack
-        case message if message == Choices.Defend.identificationString => Choices.Defend
-        case _ => declear()
+      def declear(): Action = {
+        println("you can choose attack or defence")
+        readLine() match {
+          case message if message == Choices.Attack.identificationString => Choices.Attack
+          case message if message == Choices.Defend.identificationString => Choices.Defend
+          case _ => declear()
+        }
       }
 
-      println("you can choose attack or defence")
-      player.command(creature, declear(), map)
+      commander.command(creature, declear(), map)
     }
 
     map.foldLeft(Map[String, Creature]())((res, elem) => res ++ command(elem._2))
