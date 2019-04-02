@@ -3,19 +3,20 @@ package Status
 import Utility.StatusUtility
 
 class Status(lst: List[Figure]) {
-  val map: Map[String, Figure] = (StatusUtility.lst ::: lst).foldLeft(Map[String, Figure]())((res, elem) => res + (StatusUtility.identificationString(elem) -> elem))
+  val figureMap: Map[String, Figure] =
+    (StatusUtility.lst ::: lst).foldLeft(Map[String, Figure]())((res, elem) => res + (StatusUtility.identificationString(elem) -> elem))
 
-  private def get[T <: Figure](identifilable: Identifilable, apply: Figure => T): T = apply(map(identifilable.identificationString))
+  private def get[T <: Figure](identifilable: Identifilable, apply: Figure => T): T = apply(figureMap(identifilable.identificationString))
 
-  def hp: HP = get[HP](HP, HP.apply)
+  def hp: HP = get(HP, HP.apply)
 
-  def atk: Attack = get[Attack](Attack, Attack.apply)
+  def atk: Attack = get(Attack, Attack.apply)
 
-  def defe: Defend = get[Defend](Defend, Defend.apply)
+  def defe: Defend = get(Defend, Defend.apply)
 
-  def speed: Speed = get[Speed](Speed, Speed.apply)
+  def speed: Speed = get(Speed, Speed.apply)
 
-  override def toString: String = map("hp").toString
+  override def toString: String = figureMap("hp").toString
 }
 
 object Status {

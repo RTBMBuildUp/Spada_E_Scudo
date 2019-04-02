@@ -21,6 +21,8 @@ class Queue[T] private (
 
   def enqueue(elem: T): Queue[T] = new Queue(leading, elem :: trailing)
 
+  def toList: List[T] = leading ::: trailing
+
   def isEmpty: Boolean = (leading ::: trailing).isEmpty
 }
 

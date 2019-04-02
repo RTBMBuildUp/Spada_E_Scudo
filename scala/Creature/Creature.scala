@@ -10,11 +10,11 @@ abstract class Creature(_name: String, _status: Status) extends Attackable with 
   def isAlive: Boolean = HP(0) < status.hp
 
   def flucstrateStatus(identifilable: Identifilable, func: Figure => Figure): Creature = {
-    val lst = status.map.unzip._2.toList
+    val lst = status.figureMap.unzip._2.toList
 
     Creature(
       _name,
-      Status((func(status.map(identifilable.identificationString)) :: lst.reverse).reverse)
+      Status((func(status.figureMap(identifilable.identificationString)) :: lst.reverse).reverse)
     )
   }
 
