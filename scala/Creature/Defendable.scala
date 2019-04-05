@@ -1,7 +1,7 @@
 package Creature
 
-import Status.Defend
+import Status.Defence
 
 trait Defendable {
-  def defend: Defend
+  def defend: Defence
 }

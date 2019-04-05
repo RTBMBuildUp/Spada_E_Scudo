@@ -1,21 +1,21 @@
 package Equipment
 
-import Status.Defend
+import Status.Defence
 
 abstract class Armor {
-  def correct: Defend => Defend
+  def correct: Defence => Defence
 }
 
 case object Nakedness extends Armor {
-  def correct: Defend => Defend = defe => defe
+  def correct: Defence => Defence = defe => defe
 }
 
 case object Shield extends Armor {
-  def correct: Defend => Defend = defe => Defend(defe.figure + 3)
+  def correct: Defence => Defence = defe => Defence(defe.figure + 3)
 }
 
 case object Helmet extends Armor {
-  def correct: Defend => Defend = defe => Defend(defe.figure + 1)
+  def correct: Defence => Defence = defe => Defence(defe.figure + 1)
 }
 
 

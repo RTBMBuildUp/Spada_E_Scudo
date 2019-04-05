@@ -33,7 +33,7 @@ object Figure {
 
 case class Attack private(_figure: Figure) extends Figure(_figure.figure)
 
-case class Defend private(_figure: Figure) extends Figure(_figure.figure)
+case class Defence private(_figure: Figure) extends Figure(_figure.figure)
 
 case class HP private(_figure: Figure) extends Figure(_figure.figure)
 
@@ -51,8 +51,8 @@ case object Attack extends Identifilable {
   override def identificationString: String = "atk"
 }
 
-case object Defend extends Identifilable {
-  def apply(int: Int): Defend = Defend(Figure(int))
+case object Defence extends Identifilable {
+  def apply(int: Int): Defence = Defence(Figure(int))
 
   override def identificationString: String = "def"
 }

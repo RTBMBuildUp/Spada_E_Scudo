@@ -4,10 +4,10 @@ import Creature.Creature
 import Queue.Queue
 import Utility.CreatureUtility
 
-class Scheduler(_participantsMap: Map[String, Creature], currentPhase: Phase, _actionQueue: Queue[(Creature, Action)]) {
-  def participantMap: Map[String, Creature] = _participantsMap
+class Scheduler(_participantMap: Map[String, Creature], _currentPhase: Phase, _actionQueue: Queue[(Creature, Action)]) {
+  def participantMap: Map[String, Creature] = _participantMap
   def actionQueue: Queue[(Creature, Action)] = _actionQueue
-  def goAhead(commander: Commander): Scheduler = this.currentPhase.start(commander, this)
+  def goAhead(commander: Commander): Scheduler = this._currentPhase.start(commander, this)
 }
 
 object Scheduler {

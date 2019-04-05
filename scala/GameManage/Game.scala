@@ -7,8 +7,9 @@ import Utility.CreatureUtility
 
 object Game {
   def start(participantLst: List[Creature]): Unit = {
-    def play(scheduler: Scheduler): Unit = {
-      scheduler.goAhead(Commander.apply)
+    def play(scheduler: Scheduler): Unit = scheduler.goAhead(Commander.apply) match {
+      case round if round.participantMap.toList.unzip._2.count(_.isAlive) == 1 =>
+      case round => play(round)
     }
 
     val sortedParticipantLst = participantLst.sortWith((l, r) => l.status.speed < r.status.speed)

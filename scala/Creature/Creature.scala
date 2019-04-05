@@ -2,30 +2,20 @@ package Creature
 
 import Status.{Figure, _}
 
-abstract class Creature(_name: String, _status: Status) extends Attackable with Defendable {
-  def name: String = _name
+abstract class Creature extends Attackable with Defendable {
+  def name: String
 
-  def status: Status = _status
+  def status: Status
+
+  def effectLst: List[Figure => Figure]
 
   def isAlive: Boolean = HP(0) < status.hp
 
-  def flucstrateStatus(identifilable: Identifilable, func: Figure => Figure): Creature = {
-    val lst = status.figureMap.unzip._2.toList
+  def addEffect(effect: Figure => Figure): Creature
 
-    Creature(
-      _name,
-      Status((func(status.figureMap(identifilable.identificationString)) :: lst.reverse).reverse)
-    )
-  }
+  def clearEffect: Creature
+
+  def flucstrateStatus(identifilable: Identifilable, func: Figure => Figure): Creature
 
   def damage(attacker: Attackable): Creature = flucstrateStatus(HP, (hp: Figure) => HP(hp - (attacker.attack - defend)))
-}
-
-object Creature {
-  def apply(_name: String, _status: Status): Creature = new ImplCreature(_name, _status)
-
-  private class ImplCreature(_name: String, _status: Status) extends Creature(_name: String, _status) {
-    def attack: Attack = ???
-    def defend: Defend = ???
-  }
 }

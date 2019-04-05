@@ -12,7 +12,7 @@ class Status(lst: List[Figure]) {
 
   def atk: Attack = get(Attack, Attack.apply)
 
-  def defe: Defend = get(Defend, Defend.apply)
+  def defe: Defence = get(Defence, Defence.apply)
 
   def speed: Speed = get(Speed, Speed.apply)
 
