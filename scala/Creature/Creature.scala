@@ -5,9 +5,11 @@ import Status.{Figure, _}
 abstract class Creature extends Attackable with Defendable {
   def name: String
 
-  def status: Status
+  def hp: HP
 
-  def isAlive: Boolean = HP(0) < status.hp
+  def speed: Speed
+
+  def isAlive: Boolean = HP(0) < hp
 
   def effectLst: List[Figure => Figure]
 

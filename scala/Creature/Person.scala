@@ -3,21 +3,23 @@ package Creature
 import Equipment.Equipment
 import Status._
 
-class Person(_name: String, _stat: Status, equipment: Equipment, _effectLst: List[Figure => Figure] = Nil) extends Creature {
-  def attack: Attack = effectLst.foldLeft(equipment.weapon.activate(this.status.attack))((res, func) => Attack(func(res)))
+class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: List[Figure => Figure] = Nil) extends Creature {
+  def hp: HP = _status.hp
 
-  def defend: Defence = effectLst.foldLeft(equipment.armor.activate(this.status.defence))((res, func) => Defence(func(res)))
+  def attack: Attack = effectLst.foldLeft(equipment.weapon.activate(this._status.attack))((res, func) => Attack(func(res)))
+
+  def defend: Defence = effectLst.foldLeft(equipment.armor.activate(this._status.defence))((res, func) => Defence(func(res)))
+
+  def speed: Speed = _status.speed
 
   override def name: String = _name
 
-  override def status: Status = _stat
-
   override def flucstrateStatus(identifilable: Identifilable, func: Figure => Figure): Creature = {
-    val lst = status.figureMap.unzip._2.toList
+    val lst = _status.figureMap.unzip._2.toList
 
     Person(
       _name,
-      Status((func(status.figureMap(identifilable.identificationString)) :: lst.reverse).reverse),
+      Status((func(_status.figureMap(identifilable.identificationString)) :: lst.reverse).reverse),
       equipment,
       effectLst
     )
@@ -25,9 +27,9 @@ class Person(_name: String, _stat: Status, equipment: Equipment, _effectLst: Lis
 
   override def effectLst: List[Figure => Figure] = _effectLst
 
-  override def addEffect(effect: Figure => Figure): Creature = Person(_name, _stat, equipment, effect :: effectLst)
+  override def addEffect(effect: Figure => Figure): Creature = Person(_name, _status, equipment, effect :: effectLst)
 
-  override def clearEffect: Creature = Person(_name, _stat, equipment)
+  override def clearEffect: Creature = Person(_name, _status, equipment)
 
   override def toString: String = this.name
 

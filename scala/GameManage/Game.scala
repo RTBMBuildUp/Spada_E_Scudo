@@ -12,7 +12,7 @@ object Game {
       case round => play(round)
     }
 
-    val sortedParticipantLst = participantLst.sortWith((l, r) => l.status.speed < r.status.speed)
+    val sortedParticipantLst = participantLst.sortWith((l, r) => l.speed < r.speed)
 
     play(Scheduler(sortedParticipantLst.foldLeft(Map[String, Creature]())((res, elem) => res + CreatureUtility.creatureToMapElem(elem)), MainPhase))
   }
