@@ -2,7 +2,6 @@ package GameManage
 
 import Creature.Creature
 import Queue.Queue
-import Status.{Defence, HP, Status}
 
 trait Phase {
   def start(player: Commander, scheduler: Scheduler): Scheduler

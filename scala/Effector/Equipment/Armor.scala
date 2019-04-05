@@ -1,5 +1,6 @@
-package Equipment
+package Effector.Equipment
 
+import Effector.Effector
 import Status.Defence
 
 abstract class Armor extends Effector[Defence] {

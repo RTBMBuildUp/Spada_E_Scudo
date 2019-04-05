@@ -1,4 +1,4 @@
-package Equipment
+package Effector.Equipment
 
 abstract class Equipment(_weapon: Weapon, _armor: Armor) {
   def weapon: Weapon = _weapon

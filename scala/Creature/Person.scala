@@ -1,14 +1,15 @@
 package Creature
 
-import Equipment.Equipment
+import Effector.Equipment.Equipment
+import Effector.Effector
 import Status._
 
-class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: List[Figure => Figure] = Nil) extends Creature {
+class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: List[Effector[Figure]] = Nil) extends Creature {
   def hp: HP = _status.hp
 
-  def attack: Attack = effectLst.foldLeft(equipment.weapon.activate(this._status.attack))((res, func) => Attack(func(res)))
+  def attack: Attack = effectLst.foldLeft(equipment.weapon.activate(this._status.attack))((res, effect) => Attack(effect.activate(res)))
 
-  def defend: Defence = effectLst.foldLeft(equipment.armor.activate(this._status.defence))((res, func) => Defence(func(res)))
+  def defend: Defence = effectLst.foldLeft(equipment.armor.activate(this._status.defence))((res, effect) => Defence(effect.activate(res)))
 
   def speed: Speed = _status.speed
 
@@ -25,9 +26,9 @@ class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: L
     )
   }
 
-  override def effectLst: List[Figure => Figure] = _effectLst
+  override def effectLst: List[Effector[Figure]] = _effectLst
 
-  override def addEffect(effect: Figure => Figure): Creature = Person(_name, _status, equipment, effect :: effectLst)
+  override def addEffect(effect: Effector[Figure]): Creature = Person(_name, _status, equipment, effect :: effectLst)
 
   override def clearEffect: Creature = Person(_name, _status, equipment)
 
@@ -40,6 +41,6 @@ class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: L
 }
 
 object Person {
-  def apply(name: String, stat: Status, equipment: Equipment, effectLst: List[Figure => Figure] = Nil): Person = new Person(name, stat, equipment, effectLst)
+  def apply(name: String, stat: Status, equipment: Equipment, effectLst: List[Effector[Figure]] = Nil): Person = new Person(name, stat, equipment, effectLst)
 }
 

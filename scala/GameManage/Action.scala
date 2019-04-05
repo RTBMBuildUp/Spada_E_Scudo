@@ -1,6 +1,7 @@
 package GameManage
 
 import Creature.Creature
+import Effector.EffectorLst
 import Status.{Defence, Figure, Identifilable, Speed}
 import Utility._
 
@@ -16,7 +17,6 @@ object Choices {
         case key if participantMap.filter(_._1 != creature.name).exists(_._1 == key) =>
           println(creature + "の攻撃。")
           println(participantMap(key) + "は" + (creature.attack - participantMap(key).defend) + "のダメージを受けた。")
-          participantMap.toList.unzip._2.foreach(creature => println(creature.defend))
           participantMap + CreatureUtility.creatureToMapElem(participantMap(key).damage(creature))
         case _ => execute(creature, participantMap)
       }
@@ -28,7 +28,7 @@ object Choices {
   case object Defend extends Action with Identifilable {
     override def execute(creature: Creature, participantMap: Map[String, Creature]): Map[String, Creature] = {
       println(creature + "は防御した。")
-      participantMap + CreatureUtility.creatureToMapElem(creature.addEffect((defence: Figure) => Defence(defence + 2)))
+      participantMap + CreatureUtility.creatureToMapElem(creature.addEffect(EffectorLst.Defend))
     }
 
     override def identificationString: String = "defend"

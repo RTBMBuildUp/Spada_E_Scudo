@@ -1,5 +1,5 @@
 import Creature.Person
-import Equipment.Equipment
+import Effector.Equipment.Equipment
 import GameManage.Game
 import Status.{Figure, _}
 
