@@ -48,13 +48,13 @@ case object HP extends Identifilable {
 case object Attack extends Identifilable {
   def apply(int: Int): Attack = Attack(Figure(int))
 
-  override def identificationString: String = "atk"
+  override def identificationString: String = "attack"
 }
 
 case object Defence extends Identifilable {
   def apply(int: Int): Defence = Defence(Figure(int))
 
-  override def identificationString: String = "def"
+  override def identificationString: String = "defence"
 }
 
 case object Speed extends Identifilable {
