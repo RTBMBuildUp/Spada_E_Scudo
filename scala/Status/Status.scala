@@ -10,13 +10,13 @@ class Status(lst: List[Figure]) {
 
   def hp: HP = get(HP, HP.apply)
 
-  def atk: Attack = get(Attack, Attack.apply)
+  def attack: Attack = get(Attack, Attack.apply)
 
-  def defe: Defence = get(Defence, Defence.apply)
+  def defence: Defence = get(Defence, Defence.apply)
 
   def speed: Speed = get(Speed, Speed.apply)
 
-  override def toString: String = figureMap("hp").toString
+  override def toString: String = figureMap.map(elem => elem._1 + ": " + elem._2).foldLeft("")((res, elem) => res + " ")
 }
 
 object Status {

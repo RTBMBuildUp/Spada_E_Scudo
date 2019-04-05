@@ -4,9 +4,9 @@ import Status._
 
 class Monster(_name: String, _status: Status, _effectLst: List[Figure => Figure] = Nil) extends Creature {
 
-  def attack: Attack = this.status.atk
+  def attack: Attack = this.status.attack
 
-  def defend: Defence = this.status.defe
+  def defend: Defence = this.status.defence
 
   override def name: String = _name
 

@@ -31,11 +31,11 @@ object Figure {
   def apply(figure: Figure): Figure = figure
 }
 
+case class HP private(_figure: Figure) extends Figure(_figure.figure)
+
 case class Attack private(_figure: Figure) extends Figure(_figure.figure)
 
 case class Defence private(_figure: Figure) extends Figure(_figure.figure)
-
-case class HP private(_figure: Figure) extends Figure(_figure.figure)
 
 case class Speed private(_figure: Figure) extends Figure(_figure.figure)
 

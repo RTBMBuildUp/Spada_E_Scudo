@@ -4,9 +4,9 @@ import Equipment.Equipment
 import Status._
 
 class Person(_name: String, _stat: Status, equipment: Equipment, _effectLst: List[Figure => Figure] = Nil) extends Creature {
-  def attack: Attack = effectLst.foldLeft(equipment.weapon.correct(this.status.atk))((res, func) => Attack(func(res)))
+  def attack: Attack = effectLst.foldLeft(equipment.weapon.activate(this.status.attack))((res, func) => Attack(func(res)))
 
-  def defend: Defence = effectLst.foldLeft(equipment.armor.correct(this.status.defe))((res, func) => Defence(func(res)))
+  def defend: Defence = effectLst.foldLeft(equipment.armor.activate(this.status.defence))((res, func) => Defence(func(res)))
 
   override def name: String = _name
 

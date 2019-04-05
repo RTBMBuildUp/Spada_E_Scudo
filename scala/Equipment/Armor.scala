@@ -2,20 +2,20 @@ package Equipment
 
 import Status.Defence
 
-abstract class Armor {
-  def correct: Defence => Defence
+abstract class Armor extends Effector[Defence] {
+  def activate: Defence => Defence
 }
 
 case object Nakedness extends Armor {
-  def correct: Defence => Defence = defe => defe
+  def activate: Defence => Defence = defence => defence
 }
 
 case object Shield extends Armor {
-  def correct: Defence => Defence = defe => Defence(defe.figure + 3)
+  def activate: Defence => Defence = defence => Defence(defence + 3)
 }
 
 case object Helmet extends Armor {
-  def correct: Defence => Defence = defe => Defence(defe.figure + 1)
+  def activate: Defence => Defence = defence => Defence(defence + 1)
 }
 
 

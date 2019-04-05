@@ -7,9 +7,9 @@ abstract class Creature extends Attackable with Defendable {
 
   def status: Status
 
-  def effectLst: List[Figure => Figure]
-
   def isAlive: Boolean = HP(0) < status.hp
+
+  def effectLst: List[Figure => Figure]
 
   def addEffect(effect: Figure => Figure): Creature
 
