@@ -3,7 +3,7 @@ package GameManage
 import Creature.Creature
 
 class Commander {
-  def command[T <: Creature](creature: T, action: Action, map: Map[String, Creature]): Map[String, Creature] = action.execute(creature, map)
+  def command(creature: Creature, action: Action, map: Map[String, Creature]): Map[String, Creature] = action.execute(creature, map)
 }
 
 object Commander {
