@@ -3,7 +3,7 @@ package Creature
 import Effector.Effector
 import Status._
 
-class Monster(_name: String, _status: Status, _effectLst: List[Effector[Figure]] = Nil) extends Creature {
+class Monster(_name: String, _status: Status, _effectLst: List[Effector] = Nil) extends Creature {
   def hp: HP = _status.hp
 
   def attack: Attack = this._status.attack
@@ -24,13 +24,13 @@ class Monster(_name: String, _status: Status, _effectLst: List[Effector[Figure]]
     )
   }
 
-  override def effectLst: List[Effector[Figure]] = _effectLst
+  override def effectLst: List[Effector] = _effectLst
 
-  override def addEffect(effect: Effector[Figure]): Creature = Monster(name, _status, effect :: effectLst)
+  override def addEffect(effect: Effector): Creature = Monster(name, _status, effect :: effectLst)
 
   override def clearEffect: Creature = Monster(name, _status)
 }
 
 object Monster {
-  def apply(name: String, status: Status, effectLst: List[Effector[Figure]] = Nil): Monster = new Monster(name, status, effectLst)
+  def apply(name: String, status: Status, effectLst: List[Effector] = Nil): Monster = new Monster(name, status, effectLst)
 }

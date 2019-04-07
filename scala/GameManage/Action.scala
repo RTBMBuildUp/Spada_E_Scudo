@@ -1,9 +1,12 @@
 package GameManage
 
 import Creature.Creature
+import _root_.Creature.Job.Wizard
 import Effector.EffectorLst
 import Status.{Defence, Figure, Identifilable, Speed}
 import Utility._
+
+import scala.collection.immutable.Map
 
 trait Action {
   def execute(creature: Creature, map: Map[String, Creature]): Map[String, Creature]
@@ -12,13 +15,15 @@ trait Action {
 object Choices {
   case object Attack extends Action with Identifilable {
     override def execute(creature: Creature, participantMap: Map[String, Creature]): Map[String, Creature] = {
-      println(creature.name + ": 攻撃する相手を宣言。")
-      readLine() match {
-        case key if participantMap.filter(_._1 != creature.name).exists(_._1 == key) =>
+      println(creature + ": 攻撃する相手を宣言。")
+      val key = readLine()
+
+      participantMap.toList.filter(_._1 != creature.name).filter(_._1 == key) match {
+        case Nil => execute(creature, participantMap)
+        case (_, target) :: _ =>
           println(creature + "の攻撃。")
-          println(participantMap(key) + "は" + (creature.attack - participantMap(key).defend) + "のダメージを受けた。")
-          participantMap + CreatureUtility.creatureToMapElem(participantMap(key).damage(creature))
-        case _ => execute(creature, participantMap)
+          println(target + "は" + (creature.attack - target.defend) + "のダメージを受けた。")
+          participantMap + CreatureUtility.creatureToMapElem(target.damage(creature))
       }
     }
 
@@ -32,6 +37,20 @@ object Choices {
     }
 
     override def identificationString: String = "defend"
+  }
+
+  case object Chant extends Action with Identifilable {
+    override def execute(creature: Creature, participantMap: Map[String, Creature]): Map[String, Creature] = {
+      println(creature + ": 呪文の選択。")
+      val spellName = readLine()
+
+      creature.spellLst.filter(spell => spell.identificationString == spellName) match {
+        case Nil => execute(creature, participantMap)
+        case spell :: tail => participantMap ++ creature.chant(spell, participantMap)
+      }
+    }
+
+    override def identificationString: String = "Chant"
   }
 
 }

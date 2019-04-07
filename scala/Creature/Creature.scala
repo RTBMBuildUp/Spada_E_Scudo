@@ -1,6 +1,6 @@
 package Creature
 
-import Effector.Effector
+import Effector.{Effector, Spell}
 import Status.{Figure, _}
 
 abstract class Creature extends Attackable with Defendable {
@@ -12,9 +12,13 @@ abstract class Creature extends Attackable with Defendable {
 
   def isAlive: Boolean = HP(0) < hp
 
-  def effectLst: List[Effector[Figure]]
+  def effectLst: List[Effector]
 
-  def addEffect(effect: Effector[Figure]): Creature
+  def spellLst: List[Spell] = Nil
+
+  def chant(spell: Effector, participantMap: Map[String, Creature]): Map[String, Creature] = participantMap
+
+  def addEffect(effect: Effector): Creature
 
   def clearEffect: Creature
 

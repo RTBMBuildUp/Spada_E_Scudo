@@ -1,21 +1,21 @@
 package Effector.Equipment
 
 import Effector.Effector
-import Status.Attack
+import Status.{Attack, Figure}
 
-abstract class Weapon extends Effector[Attack] {
-  def activate: Attack => Attack
+abstract class Weapon extends Effector {
+  def activate: Figure => Figure
 }
 
 case object EmptyHand extends Weapon {
-  def activate: Attack => Attack = atk => atk
+  def activate: Figure => Figure = atk => atk
 }
 
 case object Sword extends Weapon {
-  def activate: Attack => Attack = atk => Attack(atk.figure + 2)
+  def activate: Figure => Figure = atk => Attack(atk.figure + 2)
 }
 
 case object Bow extends Weapon {
-  def activate: Attack => Attack = atk => Attack(atk.figure + 1)
+  def activate: Figure => Figure  = atk => Attack(atk.figure + 1)
 }
 

@@ -1,6 +1,7 @@
 package GameManage
 
 import Creature.Creature
+import _root_.Creature.Job.Wizard
 import Queue.Queue
 
 trait Phase {
@@ -12,10 +13,11 @@ case object MainPhase extends Phase {
   override def start(commander: Commander, scheduler: Scheduler): Scheduler = {
     def declearAction(creature: Creature): (Creature, Action) = {
       def declear(): Action = {
-        println(creature + ": 攻撃するか防御するか。")
+        println(creature + ": 攻撃するか防御するか呪文を唱えるか。")
         readLine() match {
           case message if message == Choices.Attack.identificationString => Choices.Attack
           case message if message == Choices.Defend.identificationString => Choices.Defend
+          case message if message == Choices.Chant.identificationString && creature.spellLst != Nil => Choices.Chant
           case _ => declear()
         }
       }
@@ -33,8 +35,9 @@ case object MainPhase extends Phase {
       participantLst match {
         case Nil => Queue((atkLst ::: defLst).reverse)
         case creature :: tail => declearAction(creature) match {
-          case atk if atk._2 == Choices.Attack => makeActionQueue(tail, atk :: atkLst, defLst)
-          case dif if dif._2 == Choices.Defend => makeActionQueue(tail, atkLst, dif :: defLst)
+          case attack if attack._2 == Choices.Attack => makeActionQueue(tail, attack :: atkLst, defLst)
+          case defend if defend._2 == Choices.Defend => makeActionQueue(tail, atkLst, defend :: defLst)
+          case chant if chant._2 == Choices.Chant => makeActionQueue(tail, chant :: atkLst, defLst)
         }
       }
 
