@@ -2,10 +2,10 @@ package Effector
 
 import Status.{Attack, Defence, Figure, Identifilable}
 
-abstract class Effector {
-  def activate: Figure => Figure
+abstract class Effector(private val _duration: Int = 1) {
+   private val duration = if (_duration < 1) 1 else _duration
 
-  protected def duration: Int = 1
+  def activate: Figure => Figure
 
   protected def advance: Effector = duration match {
     case 1 => EffectorLst.NoEffect
