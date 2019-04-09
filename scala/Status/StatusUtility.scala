@@ -1,7 +1,6 @@
-package Utility
+package Status
 
-import GameManage.Choices
-import Status._
+import Identifilable._
 
 object StatusUtility {
 //  def lst: List[Int] = List[Int](HP(0), Attack(0), Defence(0), Speed(0))

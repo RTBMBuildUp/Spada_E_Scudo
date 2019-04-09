@@ -1,7 +1,8 @@
 package Creature
 
 import Effector.{Effector, Spell}
-import Status.{HP, Identifilable}
+import Identifilable.{HP, Identifilable}
+import Status.HP
 
 abstract class Creature extends Attackable with Defendable {
   def name: String

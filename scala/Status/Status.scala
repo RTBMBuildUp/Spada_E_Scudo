@@ -1,10 +1,9 @@
 package Status
 
-import Utility.StatusUtility
+import Identifilable.Identifilable
 
 class Status(_intMap: Map[String, Int]) {
   val intMap: Map[String, Int] = _intMap
-//    StatusUtility.lst.zipAll(lst.slice(0, StatusUtility.lst.size), None, 0).foldLeft(Map[String, Int]())((res, elem) => res + (elem._1.identify -> elem._2))
 
   private def get(key: Identifilable): Int = intMap(key.identify)
 
@@ -26,4 +25,21 @@ object Status {
   def apply(identifilableMap: Map[Identifilable, Int]): Status = new Status(identifilableMap.map(tuple => tuple._1.identify -> tuple._2))
 
 }
+
+case object HP extends Identifilable {
+  def identify: String = "HP"
+}
+
+case object Attack extends Identifilable {
+  def identify: String = "Attack"
+}
+
+case object Defence extends Identifilable {
+  def identify: String = "Defence"
+}
+
+case object Speed extends Identifilable {
+  def identify: String = "Speed"
+}
+
 

@@ -1,8 +1,9 @@
-package GameManage
+package GameManage.FlowManage
 
+import Action.Action
 import Creature.Creature
+import GameManage.Player.Commander
 import Queue.Queue
-import Utility.CreatureUtility
 
 class Scheduler(_participantMap: Map[String, Creature], _currentPhase: Phase, _actionQueue: Queue[(Creature, Action)]) {
   def participantMap: Map[String, Creature] = _participantMap

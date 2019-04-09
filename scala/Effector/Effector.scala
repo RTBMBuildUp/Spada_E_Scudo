@@ -1,6 +1,7 @@
 package Effector
 
-import Status.{Attack, Defence, Identifilable}
+import Identifilable.Identifilable
+import Status.{Attack, Defence}
 
 abstract class Effector(private val _duration: Int = 1) {
   protected val duration: Int = if (_duration < 1) 1 else _duration

@@ -1,5 +1,6 @@
-package GameManage
+package GameManage.Player
 
+import Action.Action
 import Creature.Creature
 
 class Commander {

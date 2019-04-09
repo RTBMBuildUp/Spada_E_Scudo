@@ -1,6 +1,8 @@
-package GameManage
+package GameManage.FlowManage
 
+import Action.{Action, Choices}
 import Creature.Creature
+import GameManage.Player.Commander
 import Queue.Queue
 
 trait Phase {

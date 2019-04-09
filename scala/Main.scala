@@ -3,6 +3,7 @@ import Creature.Person
 import Effector.EffectorLst
 import Effector.Equipment.Equipment
 import GameManage.Game
+import Identifilable._
 import Status._
 
 object Main {

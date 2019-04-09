@@ -1,8 +1,8 @@
 package Creature
 
 import Effector.{Effector, EffectorLst}
+import Identifilable.Identifilable
 import Status._
-import Utility.StatusUtility
 
 class Monster(_name: String, _status: Status, _effectLst: List[Effector] = Nil) extends Creature {
   def hp: Int = _status.hp

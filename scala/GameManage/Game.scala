@@ -1,7 +1,7 @@
 package GameManage
 
-import Creature.Creature
-import Utility.CreatureUtility
+import Creature.{Creature, CreatureUtility}
+import GameManage.FlowManage.{MainPhase, Scheduler}
 
 object Game {
   def start(participantLst: List[Creature]): Unit = {

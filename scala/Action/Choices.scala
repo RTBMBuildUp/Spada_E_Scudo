@@ -1,15 +1,10 @@
-package GameManage
+package Action
 
-import Creature.Creature
+import Creature.{Creature, CreatureUtility}
 import Effector.EffectorLst
-import Status.{Defence, Identifilable, Speed}
-import Utility._
+import Identifilable.Identifilable
 
 import scala.collection.immutable.Map
-
-trait Action {
-  def execute(creature: Creature, map: Map[String, Creature]): Map[String, Creature]
-}
 
 object Choices {
   case object Attack extends Action with Identifilable {

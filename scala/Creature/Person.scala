@@ -2,8 +2,8 @@ package Creature
 
 import Effector.Equipment.Equipment
 import Effector.{Effector, EffectorLst}
+import Identifilable.Identifilable
 import Status._
-import Utility.StatusUtility
 
 class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: List[Effector] = Nil) extends Creature {
   def hp: Int = _status.hp
