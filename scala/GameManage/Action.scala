@@ -1,7 +1,6 @@
 package GameManage
 
 import Creature.Creature
-import _root_.Creature.Job.Wizard
 import Effector.EffectorLst
 import Status.{Defence, Identifilable, Speed}
 import Utility._
@@ -47,7 +46,6 @@ object Choices {
       creature.spellLst.filter(spell => spell.identify == spellName) match {
         case Nil => execute(creature, participantMap)
         case spell :: tail => participantMap ++ creature.chant(spell, participantMap(readLine()), participantMap)
-//        case spell :: tail => participantMap + CreatureUtility.creatureToMapElem(creature.addEffect(EffectorLst.TwinHits))
       }
     }
 

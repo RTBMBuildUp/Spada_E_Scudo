@@ -1,7 +1,6 @@
 package GameManage
 
 import Creature.Creature
-import _root_.Creature.Job.Wizard
 import Queue.Queue
 
 trait Phase {

@@ -29,7 +29,12 @@ class Monster(_name: String, _status: Status, _effectLst: List[Effector] = Nil) 
 
   override def addEffect(effect: Effector): Creature = Monster(name, _status, effect :: effectLst)
 
-  override def clearEffect: Creature = Monster(name, _status, effectLst.filter(effect => effect.advance != EffectorLst.NoEffect))
+  override def clearEffect: Creature =
+    Monster(
+      name,
+      _status,
+      effectLst.map(effect => effect.advance).filter(_ != EffectorLst.NoEffect)
+    )
 }
 
 object Monster {

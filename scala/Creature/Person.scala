@@ -31,7 +31,13 @@ class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: L
 
   override def addEffect(effect: Effector): Creature = Person(_name, _status, equipment, effect :: effectLst)
 
-  override def clearEffect: Creature = Person(_name, _status, equipment, effectLst.filter(effect => effect.advance != EffectorLst.NoEffect))
+  override def clearEffect: Creature =
+    Person(
+      _name,
+      _status,
+      equipment,
+      effectLst.map(_.advance).filter(_ != EffectorLst.NoEffect)
+    )
 
   override def toString: String = this.name
 
