@@ -1,6 +1,6 @@
 package Creature
 
-import Effector.Effector
+import Effector.{Effector, EffectorLst}
 import Status._
 
 class Monster(_name: String, _status: Status, _effectLst: List[Effector] = Nil) extends Creature {
@@ -28,7 +28,7 @@ class Monster(_name: String, _status: Status, _effectLst: List[Effector] = Nil) 
 
   override def addEffect(effect: Effector): Creature = Monster(name, _status, effect :: effectLst)
 
-  override def clearEffect: Creature = Monster(name, _status)
+  override def clearEffect: Creature = Monster(name, _status, effectLst.filter(effect => effect.advance != EffectorLst.NoEffect))
 }
 
 object Monster {

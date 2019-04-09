@@ -1,7 +1,7 @@
 package Creature
 
 import Effector.Equipment.Equipment
-import Effector.Effector
+import Effector.{Effector, EffectorLst}
 import Status._
 
 class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: List[Effector] = Nil) extends Creature {
@@ -30,7 +30,7 @@ class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: L
 
   override def addEffect(effect: Effector): Creature = Person(_name, _status, equipment, effect :: effectLst)
 
-  override def clearEffect: Creature = Person(_name, _status, equipment)
+  override def clearEffect: Creature = Person(_name, _status, equipment, effectLst.filter(effect => effect.advance != EffectorLst.NoEffect))
 
   override def toString: String = this.name
 

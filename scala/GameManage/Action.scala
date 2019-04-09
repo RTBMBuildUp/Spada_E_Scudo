@@ -46,11 +46,12 @@ object Choices {
 
       creature.spellLst.filter(spell => spell.identificationString == spellName) match {
         case Nil => execute(creature, participantMap)
-        case spell :: tail => participantMap ++ creature.chant(spell, participantMap)
+        case spell :: tail => participantMap ++ creature.chant(spell, participantMap(readLine()), participantMap)
+//        case spell :: tail => participantMap + CreatureUtility.creatureToMapElem(creature.addEffect(EffectorLst.TwinHits))
       }
     }
 
-    override def identificationString: String = "Chant"
+    override def identificationString: String = "chant"
   }
 
 }

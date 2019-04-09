@@ -16,13 +16,13 @@ abstract class Creature extends Attackable with Defendable {
 
   def spellLst: List[Spell] = Nil
 
-  def chant(spell: Effector, participantMap: Map[String, Creature]): Map[String, Creature] = participantMap
+  def chant(spell: Effector, target: Creature, participantMap: Map[String, Creature]): Map[String, Creature] = participantMap
 
   def addEffect(effect: Effector): Creature
 
   def clearEffect: Creature
 
-  def flucstrateStatus(identifilable: Identifilable, effect: Figure => Figure): Creature
+  def flucstrateStatus(identifilable: Identifilable, func: Figure => Figure): Creature
 
   def damage(attacker: Attackable): Creature = flucstrateStatus(HP, (hp: Figure) => HP(hp - (attacker.attack - defend)))
 }

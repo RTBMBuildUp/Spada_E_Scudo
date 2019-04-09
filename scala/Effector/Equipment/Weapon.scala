@@ -3,7 +3,7 @@ package Effector.Equipment
 import Effector.Effector
 import Status.{Attack, Figure}
 
-abstract class Weapon extends Effector {
+abstract class Weapon extends Effector(1) {
   def activate: Figure => Figure
 }
 
