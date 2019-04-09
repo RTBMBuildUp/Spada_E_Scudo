@@ -33,7 +33,7 @@ object Choices {
   case object Defend extends Action with Identifilable {
     override def execute(creature: Creature, participantMap: Map[String, Creature]): Map[String, Creature] = {
       println(creature + "は防御した。")
-      participantMap + CreatureUtility.creatureToMapElem(creature.addEffect(EffectorLst.Defend))
+      participantMap + CreatureUtility.creatureToMapElem(creature.addEffect(EffectorLst.Defend()))
     }
 
     override def identificationString: String = "defend"

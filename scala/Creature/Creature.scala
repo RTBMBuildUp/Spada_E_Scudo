@@ -22,7 +22,7 @@ abstract class Creature extends Attackable with Defendable {
 
   def clearEffect: Creature
 
-  def flucstrateStatus(identifilable: Identifilable, func: Figure => Figure): Creature
+  def flucstrateStatus(func: Figure => Figure): Creature
 
-  def damage(attacker: Attackable): Creature = flucstrateStatus(HP, (hp: Figure) => HP(hp - (attacker.attack - defend)))
+  def damage(attacker: Attackable): Creature = flucstrateStatus((hp: Figure) => HP(hp - (attacker.attack - defend)))
 }

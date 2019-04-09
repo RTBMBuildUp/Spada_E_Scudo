@@ -3,6 +3,7 @@ package Creature
 import Effector.Equipment.Equipment
 import Effector.{Effector, EffectorLst}
 import Status._
+import Utility.StatusUtility
 
 class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: List[Effector] = Nil) extends Creature {
   def hp: HP = _status.hp
@@ -15,12 +16,12 @@ class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: L
 
   override def name: String = _name
 
-  override def flucstrateStatus(identifilable: Identifilable, func: Figure => Figure): Creature = {
+  override def flucstrateStatus(func: Figure => Figure): Creature = {
     val lst = _status.figureMap.unzip._2.toList
 
     Person(
       _name,
-      Status((func(_status.figureMap(identifilable.identificationString)) :: lst.reverse).reverse),
+      Status((func(_status.figureMap(StatusUtility.identificationString(func))) :: lst.reverse).reverse),
       equipment,
       effectLst
     )

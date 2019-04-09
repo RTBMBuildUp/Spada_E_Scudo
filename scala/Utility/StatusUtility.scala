@@ -1,5 +1,6 @@
 package Utility
 
+import GameManage.Choices
 import Status._
 
 object StatusUtility {
@@ -10,5 +11,14 @@ object StatusUtility {
     case _: Attack => Attack
     case _: Defence => Defence
     case _: Speed => Speed
+  }).identificationString
+
+
+
+  def identificationString(apply: Figure => Figure): String = (apply match {
+    case _: Function1[_, HP] => HP
+    case _: Function1[_, Attack] => Attack
+    case _: Function1[_, Defence] => Defence
+    case _: Function1[_, Speed] => Speed
   }).identificationString
 }

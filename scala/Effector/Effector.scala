@@ -8,6 +8,11 @@ abstract class Effector(private val _duration: Int = 1) {
   def activate: Figure => Figure
 
   def advance: Effector = EffectorLst.NoEffect
+
+  def advance(apply: Int => Effector): Effector = duration match {
+    case 1 => EffectorLst.NoEffect
+    case num => apply(num - 1)
+  }
 }
 
 abstract class Spell(duration: Int) extends Effector(duration) with Identifilable
@@ -23,20 +28,20 @@ object Spell {
 }
 
 object EffectorLst {
-  case object Defend extends Effector {
-    def activate: Figure => Figure = (defence: Figure) => Defence(defence + 2)
-  }
-
   case object NoEffect extends Effector {
     def activate: Figure => Figure = ???
   }
 
-  case object TwinHits extends Spell(2) {
+  case class Defend(_duration: Int = 1) extends Effector(_duration) {
+    def activate: Figure => Figure = (defence: Figure) => Defence(defence + 2)
+  }
+
+  case class TwinHits(_duration: Int = 2) extends Spell(_duration) {
     def activate: Figure => Figure = (attack: Figure) => Attack(attack * 3 / 2)
 
     override def advance: Effector = duration match {
       case 1 => NoEffect
-      case num => Spell(num - 1, activate, TwinHits, identificationString)
+      case num => TwinHits(num - 1)
     }
 
     def identificationString: String = "twin_hits"
