@@ -1,22 +1,21 @@
 package Effector.Equipment
 
 import Effector.Effector
-import Status.{Defence, Figure}
 
 abstract class Armor extends Effector {
-  def activate: Figure => Figure
+  def activate: Int => Int
 }
 
 case object Nakedness extends Armor {
-  def activate: Figure => Figure = defence => defence
+  def activate: Int => Int = defence => defence
 }
 
 case object Shield extends Armor {
-  def activate: Figure => Figure = defence => Defence(defence + 3)
+  def activate: Int => Int = defence => defence + 3
 }
 
 case object Helmet extends Armor {
-  def activate: Figure => Figure = defence => Defence(defence + 1)
+  def activate: Int => Int = defence => defence + 1
 }
 
 

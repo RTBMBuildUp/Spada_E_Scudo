@@ -6,22 +6,22 @@ import Status._
 import Utility.StatusUtility
 
 class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: List[Effector] = Nil) extends Creature {
-  def hp: HP = _status.hp
+  def hp: Int = _status.hp
 
-  def attack: Attack = effectLst.foldLeft(Attack(equipment.weapon.activate(this._status.attack)))((res, effect) => Attack(effect.activate(res)))
+  def attack: Int = effectLst.foldLeft(equipment.weapon.activate(this._status.attack))((res, effect) => effect.activate(res))
 
-  def defend: Defence = effectLst.foldLeft(Defence(equipment.armor.activate(this._status.defence)))((res, effect) => Defence(effect.activate(res)))
+  def defend: Int = effectLst.foldLeft(equipment.armor.activate(this._status.defence))((res, effect) => effect.activate(res))
 
-  def speed: Speed = _status.speed
+  def speed: Int = _status.speed
 
   override def name: String = _name
 
-  override def flucstrateStatus(func: Figure => Figure): Creature = {
-    val lst = _status.figureMap.unzip._2.toList
+  override def flucstrateStatus(identificatable: Identifilable, func: Int => Int): Creature = {
+    val lst = _status.intMap.unzip._2.toList
 
     Person(
       _name,
-      Status((func(_status.figureMap(StatusUtility.identificationString(func))) :: lst.reverse).reverse),
+      Status((func(_status.intMap(identificatable.identify)) :: lst.reverse).reverse),
       equipment,
       effectLst
     )

@@ -15,9 +15,9 @@ case object MainPhase extends Phase {
       def declear(): Action = {
         println(creature + ": 攻撃するか防御するか呪文を唱えるか。")
         readLine() match {
-          case message if message == Choices.Attack.identificationString => Choices.Attack
-          case message if message == Choices.Defend.identificationString => Choices.Defend
-          case message if message == Choices.Chant.identificationString && creature.spellLst != Nil => Choices.Chant
+          case message if message == Choices.Attack.identify => Choices.Attack
+          case message if message == Choices.Defend.identify => Choices.Defend
+          case message if message == Choices.Chant.identify && creature.spellLst != Nil => Choices.Chant
           case _ => declear()
         }
       }

@@ -2,24 +2,28 @@ package Status
 
 import Utility.StatusUtility
 
-class Status(lst: List[Figure]) {
-  val figureMap: Map[String, Figure] =
-    (StatusUtility.lst ::: lst).foldLeft(Map[String, Figure]())((res, elem) => res + (StatusUtility.identificationString(elem) -> elem))
+class Status(_intMap: Map[String, Int]) {
+  val intMap: Map[String, Int] = _intMap
+//    StatusUtility.lst.zipAll(lst.slice(0, StatusUtility.lst.size), None, 0).foldLeft(Map[String, Int]())((res, elem) => res + (elem._1.identify -> elem._2))
 
-  private def get[T <: Figure](apply: Figure => T): T = apply(figureMap(StatusUtility.identificationString(apply)))
+  private def get(key: Identifilable): Int = intMap(key.identify)
 
-  def hp: HP = get(HP.apply)
+  def hp: Int = get(HP)
 
-  def attack: Attack = get(Attack.apply)
+  def attack: Int = get(Attack)
 
-  def defence: Defence = get(Defence.apply)
+  def defence: Int = get(Defence)
 
-  def speed: Speed = get(Speed.apply)
+  def speed: Int = get(Speed)
 
-  override def toString: String = figureMap.map(elem => elem._1 + ": " + elem._2).foldLeft("")((res, elem) => res + " ")
+  override def toString: String = intMap.map(elem => elem._1 + ": " + elem._2).foldLeft("")((res, elem) => res + " ")
 }
 
 object Status {
-  def apply(elem: List[Figure]): Status = new Status(elem)
+  def apply(lst: List[Int]): Status =
+    new Status(StatusUtility.lst.zipAll(lst.slice(0, StatusUtility.lst.size), None, 0).foldLeft(Map[String, Int]())((res, elem) => res + (elem._1.identify -> elem._2)))
+
+  def apply(identifilableMap: Map[Identifilable, Int]): Status = new Status(identifilableMap.map(tuple => tuple._1.identify -> tuple._2))
+
 }
 

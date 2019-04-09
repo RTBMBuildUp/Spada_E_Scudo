@@ -3,7 +3,7 @@ package GameManage
 import Creature.Creature
 import _root_.Creature.Job.Wizard
 import Effector.EffectorLst
-import Status.{Defence, Figure, Identifilable, Speed}
+import Status.{Defence, Identifilable, Speed}
 import Utility._
 
 import scala.collection.immutable.Map
@@ -27,7 +27,7 @@ object Choices {
       }
     }
 
-    override def identificationString: String = "attack"
+    override def identify: String = "attack"
   }
 
   case object Defend extends Action with Identifilable {
@@ -36,7 +36,7 @@ object Choices {
       participantMap + CreatureUtility.creatureToMapElem(creature.addEffect(EffectorLst.Defend()))
     }
 
-    override def identificationString: String = "defend"
+    override def identify: String = "defend"
   }
 
   case object Chant extends Action with Identifilable {
@@ -44,14 +44,14 @@ object Choices {
       println(creature + ": 呪文の選択。")
       val spellName = readLine()
 
-      creature.spellLst.filter(spell => spell.identificationString == spellName) match {
+      creature.spellLst.filter(spell => spell.identify == spellName) match {
         case Nil => execute(creature, participantMap)
         case spell :: tail => participantMap ++ creature.chant(spell, participantMap(readLine()), participantMap)
 //        case spell :: tail => participantMap + CreatureUtility.creatureToMapElem(creature.addEffect(EffectorLst.TwinHits))
       }
     }
 
-    override def identificationString: String = "chant"
+    override def identify: String = "chant"
   }
 
 }

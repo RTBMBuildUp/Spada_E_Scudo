@@ -3,7 +3,7 @@ package Creature.Job
 import Creature.{Creature, Person}
 import Effector.{Effector, Spell}
 import _root_.Effector.Equipment.Equipment
-import Status.{Figure, Status}
+import Status.Status
 import Utility.CreatureUtility
 
 class Wizard(_name: String, _status: Status, equipment: Equipment, _spellLst: List[Spell], effectLst: List[Effector] = Nil) extends Person(_name, _status, equipment, effectLst) {

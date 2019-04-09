@@ -1,16 +1,16 @@
 package Creature
 
 import Effector.{Effector, Spell}
-import Status.{Figure, _}
+import Status.{HP, Identifilable}
 
 abstract class Creature extends Attackable with Defendable {
   def name: String
 
-  def hp: HP
+  def hp: Int
 
-  def speed: Speed
+  def speed: Int
 
-  def isAlive: Boolean = HP(0) < hp
+  def isAlive: Boolean = 0 < hp
 
   def effectLst: List[Effector]
 
@@ -22,7 +22,7 @@ abstract class Creature extends Attackable with Defendable {
 
   def clearEffect: Creature
 
-  def flucstrateStatus(func: Figure => Figure): Creature
+  def flucstrateStatus(identificatable: Identifilable, func: Int => Int): Creature
 
-  def damage(attacker: Attackable): Creature = flucstrateStatus((hp: Figure) => HP(hp - (attacker.attack - defend)))
+  def damage(attacker: Attackable): Creature = flucstrateStatus(HP, (hp: Int) => hp - (attacker.attack - defend))
 }

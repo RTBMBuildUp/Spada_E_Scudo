@@ -1,7 +1,5 @@
 package Creature
 
-import Status.Defence
-
 trait Defendable {
-  def defend: Defence
+  def defend: Int
 }

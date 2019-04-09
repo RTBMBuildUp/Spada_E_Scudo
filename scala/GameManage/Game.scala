@@ -1,8 +1,6 @@
 package GameManage
 
-import Creature.{Creature, Monster}
-import Queue.Queue
-import Status.{Figure, HP, Status}
+import Creature.Creature
 import Utility.CreatureUtility
 
 object Game {
