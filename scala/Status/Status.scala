@@ -1,11 +1,15 @@
 package Status
 
+import Effector.EffectorLst
 import Identifilable.Identifilable
 
 class Status(_intMap: Map[String, Int]) {
   val intMap: Map[String, Int] = _intMap
 
-  private def get(key: Identifilable): Int = intMap(key.identify)
+  private def get(key: Identifilable): Int = intMap.toList.filter(_._1 == key.identify) match {
+    case Nil => 0
+    case (_, value) :: _ => value
+  }
 
   def hp: Int = get(HP)
 
@@ -20,7 +24,7 @@ class Status(_intMap: Map[String, Int]) {
 
 object Status {
   def apply(lst: List[Int]): Status =
-    new Status(StatusUtility.lst.zipAll(lst.slice(0, StatusUtility.lst.size), None, 0).foldLeft(Map[String, Int]())((res, elem) => res + (elem._1.identify -> elem._2)))
+    new Status(StatusUtility.lst.zip(lst).map(tuple => (tuple._1.identify, tuple._2)).toMap)
 
   def apply(identifilableMap: Map[Identifilable, Int]): Status = new Status(identifilableMap.map(tuple => tuple._1.identify -> tuple._2))
 

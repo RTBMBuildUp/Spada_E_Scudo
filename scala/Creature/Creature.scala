@@ -1,7 +1,7 @@
 package Creature
 
 import Effector.{Effector, Spell}
-import Identifilable.{HP, Identifilable}
+import Identifilable.Identifilable
 import Status.HP
 
 abstract class Creature extends Attackable with Defendable {
@@ -25,5 +25,8 @@ abstract class Creature extends Attackable with Defendable {
 
   def flucstrateStatus(identificatable: Identifilable, func: Int => Int): Creature
 
-  def damage(attacker: Attackable): Creature = flucstrateStatus(HP, (hp: Int) => hp - (attacker.attack - defend))
+  def damage(attacker: Attackable): Creature = {
+    println(this + "は" + (attacker.attack - this.defend) + "のダメージを受けた。")
+    flucstrateStatus(HP, (hp: Int) => hp - (attacker.attack - defend))
+  }
 }

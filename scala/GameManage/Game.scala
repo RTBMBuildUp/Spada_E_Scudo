@@ -2,6 +2,7 @@ package GameManage
 
 import Creature.{Creature, CreatureUtility}
 import GameManage.FlowManage.{MainPhase, Scheduler}
+import GameManage.Player.Commander
 
 object Game {
   def start(participantLst: List[Creature]): Unit = {
