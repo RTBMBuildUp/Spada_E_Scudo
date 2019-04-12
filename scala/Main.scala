@@ -14,8 +14,6 @@ object Main {
 
     def twinHits(atk: Int): Int = atk * 2
 
-//    println(EffectorLst.TwinHits.activate.apply(Figure(1)))
-
     Game.start(List(arusu, kifa, maribel))
   }
 }

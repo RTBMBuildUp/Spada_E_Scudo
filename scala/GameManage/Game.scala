@@ -2,11 +2,10 @@ package GameManage
 
 import Creature.{Creature, CreatureUtility}
 import GameManage.FlowManage.{MainPhase, Scheduler}
-import GameManage.Player.Commander
 
 object Game {
   def start(participantLst: List[Creature]): Unit = {
-    def play(scheduler: Scheduler): Unit = scheduler.goAhead(Commander.apply) match {
+    def play(scheduler: Scheduler): Unit = scheduler.goAhead() match {
       case round if round.participantMap.toList.unzip._2.count(_.isAlive) == 1 =>
       case round => play(round)
     }

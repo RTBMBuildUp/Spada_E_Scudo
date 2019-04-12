@@ -1,11 +1,13 @@
 package Creature
 
 import Effector.Equipment.Equipment
-import Effector.{Effector, EffectorLst}
+import Effector.{Effector, EffectorLst, Spell}
 import Identifilable.Identifilable
 import Status._
 
 class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: List[Effector] = Nil) extends Creature {
+  override def identify: String = "person"
+
   def hp: Int = _status.hp
 
   def attack: Int = effectLst.foldLeft(equipment.weapon.activate(this._status.attack))((res, effect) => effect.activate(res))
@@ -13,6 +15,8 @@ class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: L
   def defend: Int = effectLst.foldLeft(equipment.armor.activate(this._status.defence))((res, effect) => effect.activate(res))
 
   def speed: Int = _status.speed
+
+  override def spellLst: List[Spell] = Nil
 
   override def name: String = _name
 

@@ -1,10 +1,12 @@
 package Creature
 
-import Effector.{Effector, EffectorLst}
+import Effector.{Effector, EffectorLst, Spell}
 import Identifilable.Identifilable
 import Status._
 
 class Monster(_name: String, _status: Status, _effectLst: List[Effector] = Nil) extends Creature {
+  override def identify: String = "monster"
+
   def hp: Int = _status.hp
 
   def attack: Int = this._status.attack
@@ -12,6 +14,8 @@ class Monster(_name: String, _status: Status, _effectLst: List[Effector] = Nil) 
   def defend: Int = this._status.defence
 
   def speed: Int = this._status.speed
+
+  override def spellLst: List[Spell] = Nil
 
   override def name: String = _name
 

@@ -1,17 +1,15 @@
 package GameManage.FlowManage
 
-import Action.Action
 import Creature.Creature
-import GameManage.Player.Commander
 import Queue.Queue
 
-class Scheduler(_participantMap: Map[String, Creature], _currentPhase: Phase, _actionQueue: Queue[(String, Action)]) {
+class Scheduler(_participantMap: Map[String, Creature], _currentPhase: Phase, _actionQueue: Queue[Map[String, Creature] => Map[String, Creature]]) {
   def participantMap: Map[String, Creature] = _participantMap
-  def actionQueue: Queue[(String, Action)] = _actionQueue
-  def goAhead(commander: Commander): Scheduler = this._currentPhase.start(commander, this)
+  def actionQueue: Queue[Map[String, Creature] => Map[String, Creature]] = _actionQueue
+  def goAhead(): Scheduler = this._currentPhase.start(this)
 }
 
 object Scheduler {
-  def apply(participantMap: Map[String, Creature], currentPhase: Phase, actionQueue: Queue[(String, Action)] = Queue(Nil)): Scheduler =
+  def apply(participantMap: Map[String, Creature], currentPhase: Phase, actionQueue: Queue[Map[String, Creature] => Map[String, Creature]] = Queue(Nil)): Scheduler =
     new Scheduler(participantMap, currentPhase, actionQueue)
 }

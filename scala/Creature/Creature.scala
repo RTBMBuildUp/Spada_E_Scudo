@@ -4,7 +4,7 @@ import Effector.{Effector, Spell}
 import Identifilable.Identifilable
 import Status.HP
 
-abstract class Creature extends Attackable with Defendable {
+abstract class Creature extends Attackable with Defendable with Identifilable {
   def name: String
 
   def hp: Int
@@ -15,7 +15,7 @@ abstract class Creature extends Attackable with Defendable {
 
   def effectLst: List[Effector]
 
-  def spellLst: List[Spell] = Nil
+  def spellLst: List[Spell]
 
   def chant(spell: Effector, target: Creature, participantMap: Map[String, Creature]): Map[String, Creature] = participantMap
 
@@ -26,7 +26,7 @@ abstract class Creature extends Attackable with Defendable {
   def flucstrateStatus(identificatable: Identifilable, func: Int => Int): Creature
 
   def damage(attacker: Attackable): Creature = {
-    println(this + "は" + (attacker.attack - this.defend) + "のダメージを受けた。")
-    flucstrateStatus(HP, (hp: Int) => hp - (attacker.attack - defend))
+    println(this + "は" + (defend - attacker.attack) + "のダメージを受けた。")
+    flucstrateStatus(HP, (hp: Int) => hp - (defend - attacker.attack))
   }
 }
