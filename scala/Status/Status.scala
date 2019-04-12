@@ -1,6 +1,6 @@
 package Status
 
-import Effector.EffectorLst
+import Effector.Effectors
 import Identifilable.Identifilable
 
 class Status(_intMap: Map[String, Int]) {

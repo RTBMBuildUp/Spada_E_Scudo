@@ -1,8 +1,13 @@
-package Choice
+package GameManage.FlowManage.Choice
+
 import Creature.Creature
 import Effector.Spell
 import Identifilable.Identifilable
+import GameManage.FlowManage._
 
+trait Choice {
+  def declareTarget(executerName: String, participantMap: Map[String, Creature], readFunc: () => String): Map[String, Creature] => Map[String, Creature]
+}
 
 case object Attack extends Choice with Identifilable {
   override def declareTarget(executerName: String, participantMap: Map[String, Creature], readFunc: () => String): Map[String, Creature] => Map[String, Creature] = {
@@ -56,3 +61,4 @@ case object Defend extends Choice with Identifilable {
 
   override def identify: String = "defend"
 }
+

@@ -1,7 +1,7 @@
-package Action
+package GameManage.FlowManage.Action
 
 import Creature.{Attackable, Creature, CreatureUtility}
-import Effector.{EffectorLst, Spell}
+import Effector.{Effectors, Spell}
 import Identifilable.Identifilable
 
 import scala.collection.immutable.Map
@@ -25,7 +25,7 @@ case object Defend extends Action with Identifilable {
     val defender = participantMap(defenderName)
 
     println(defenderName + "は防御した。")
-    participantMap + CreatureUtility.creatureToMapElem(defender.addEffect(EffectorLst.Defend()))
+    participantMap + CreatureUtility.creatureToMapElem(defender.addEffect(Effectors.Defend()))
   }
 
   override def identify: String = "defend"
@@ -37,6 +37,7 @@ case object Chant extends Action with Identifilable {
     val target = participantMap(targetName)
 
     println(wizardName + "は" + targetName + "に" + spell.identify + "を唱えた")
+    println(target + "の" + spell.startMessage + "した")
     participantMap ++ wizard.chant(spell, target, participantMap)
   }
 

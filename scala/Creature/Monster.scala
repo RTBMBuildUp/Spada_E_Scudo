@@ -1,6 +1,6 @@
 package Creature
 
-import Effector.{Effector, EffectorLst, Spell}
+import Effector.{Effector, Effectors, Spell}
 import Identifilable.Identifilable
 import Status._
 
@@ -37,7 +37,7 @@ class Monster(_name: String, _status: Status, _effectLst: List[Effector] = Nil) 
     Monster(
       name,
       _status,
-      effectLst.map(effect => effect.advance).filter(_ != EffectorLst.NoEffect)
+      effectLst.map(effect => effect.advance).filter(_ != Effectors.NoEffect)
     )
 }
 

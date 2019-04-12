@@ -1,14 +1,15 @@
-package GameManage.FlowManage
+package GameManage.FlowManage.Phase
 
-import Choice.Choice
 import Creature.Creature
+import GameManage.FlowManage.Action.Chant
+import GameManage.FlowManage.Choice.{Choice, Choices}
+import GameManage.FlowManage.{Action, Scheduler}
 import Identifilable.Identifilable
 
 import scala.collection.immutable.Queue
 
 trait Phase {
   def start(scheduler: Scheduler): Scheduler
-  def end(map: Map[String, Creature]): Scheduler
 }
 
 case object MainPhase extends Phase {
@@ -17,7 +18,7 @@ case object MainPhase extends Phase {
       def action: (Identifilable, Map[String, Creature] => Map[String, Creature]) = {
         val choice = readLine()
         val choiceLst: List[Choice with Identifilable] =
-          if (scheduler.participantMap(executerName).spellLst != Nil) Choice.Chant :: List(Choice.Attack, Choice.Defend) else List(Choice.Attack, Choice.Defend)
+          if (scheduler.participantMap(executerName).spellLst != Nil) Choices.lst else Choices.lst.filter(_ != Chant)
 
         choiceLst.filter(_.identify == choice) match {
           case Nil => action
@@ -47,8 +48,6 @@ case object MainPhase extends Phase {
       makeActionQueue()
     ).goAhead()
   }
-
-  override def end(map: Map[String, Creature]): Scheduler = ???
 }
 
 case object CombatPhase extends Phase {
@@ -62,15 +61,11 @@ case object CombatPhase extends Phase {
         case action :: tail => execute(tail, action(participantMap))
       }
 
-    Scheduler(execute().map(tuple => (tuple._1, tuple._2.clearEffect)), EndPhase)
+    Scheduler(execute(), EndPhase)
   }
-
-  override def end(map: Map[String, Creature]): Scheduler = ???
 }
 
 case object EndPhase extends Phase {
-  override def start(scheduler: Scheduler): Scheduler = Scheduler(scheduler.participantMap, MainPhase)
-
-
-  override def end(map: Map[String, Creature]): Scheduler = ???
+  override def start(scheduler: Scheduler): Scheduler =
+    Scheduler(scheduler.participantMap.map(tuple => (tuple._1, tuple._2.clearEffect)), MainPhase)
 }

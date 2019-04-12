@@ -1,7 +1,7 @@
 package Creature
 
 import Effector.Equipment.Equipment
-import Effector.{Effector, EffectorLst, Spell}
+import Effector.{Effector, Effectors, Spell}
 import Identifilable.Identifilable
 import Status._
 
@@ -40,7 +40,7 @@ class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: L
       _name,
       _status,
       equipment,
-      effectLst.map(_.advance).filter(_ != EffectorLst.NoEffect)
+      effectLst.map(_.advance).filter(_ != Effectors.NoEffect)
     )
 
   override def toString: String = this.name

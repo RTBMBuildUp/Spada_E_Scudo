@@ -1,6 +1,7 @@
 package GameManage.FlowManage
 
 import Creature.Creature
+import GameManage.FlowManage.Phase.Phase
 
 import scala.collection.immutable.Queue
 
