@@ -1,7 +1,8 @@
 package GameManage.FlowManage
 
 import Creature.Creature
-import Queue.Queue
+
+import scala.collection.immutable.Queue
 
 class Scheduler(_participantMap: Map[String, Creature], _currentPhase: Phase, _actionQueue: Queue[Map[String, Creature] => Map[String, Creature]]) {
   def participantMap: Map[String, Creature] = _participantMap
@@ -10,6 +11,6 @@ class Scheduler(_participantMap: Map[String, Creature], _currentPhase: Phase, _a
 }
 
 object Scheduler {
-  def apply(participantMap: Map[String, Creature], currentPhase: Phase, actionQueue: Queue[Map[String, Creature] => Map[String, Creature]] = Queue(Nil)): Scheduler =
+  def apply(participantMap: Map[String, Creature], currentPhase: Phase, actionQueue: Queue[Map[String, Creature] => Map[String, Creature]] = Queue(Nil: _*)): Scheduler =
     new Scheduler(participantMap, currentPhase, actionQueue)
 }

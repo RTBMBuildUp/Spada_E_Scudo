@@ -3,7 +3,8 @@ package GameManage.FlowManage
 import Choice.Choice
 import Creature.Creature
 import Identifilable.Identifilable
-import Queue.Queue
+
+import scala.collection.immutable.Queue
 
 trait Phase {
   def start(scheduler: Scheduler): Scheduler
@@ -37,7 +38,7 @@ case object MainPhase extends Phase {
       val dif = pair._1.map(_._2)
       val atk = pair._2.map(_._2)
 
-      Queue(dif ::: atk)
+      Queue(dif ::: atk: _*)
     }
 
     Scheduler(
