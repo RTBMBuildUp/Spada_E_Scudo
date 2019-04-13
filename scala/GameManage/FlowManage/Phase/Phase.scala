@@ -35,7 +35,7 @@ case object MainPhase extends Phase {
     val actionQueue = scheduler.actionQueue
 
     def makeActionQueue(participantNameLst: List[String] = participantNameLst): Queue[Map[String, Creature] => Map[String, Creature]] = {
-      val pair = participantNameLst.map(creatureName => declearAction(creatureName)).partition(_._1.identify == Action.Defend.identify)
+      val pair = participantNameLst.map(creatureName => declearAction(creatureName)).partition(_._1 == Action.Defend)
       val dif = pair._1.map(_._2)
       val atk = pair._2.map(_._2)
 

@@ -1,9 +1,12 @@
 package Effector
 
 import Identifilable.Identifilable
+import Status._
 
 abstract class Effector(private val _duration: Int = 1) {
   protected val duration: Int = if (_duration < 1) 1 else _duration
+
+  def adaptType: Identifilable = ???
 
   def activate: Int => Int
 
@@ -20,7 +23,9 @@ abstract class Spell(duration: Int) extends Effector(duration) with Identifilabl
 }
 
 object Spell {
-  def apply(duration: Int, activateFunc: Int => Int, _stateTransition: Effector, _spellName: String, _message: String): Spell = new Spell(duration) {
+  def apply(duration: Int, _adaptType: Identifilable, activateFunc: Int => Int, _stateTransition: Effector, _spellName: String, _message: String): Spell = new Spell(duration) {
+    override def adaptType: Identifilable = _adaptType
+
     override def activate: Int => Int = activateFunc
 
     override def advance: Effector = _stateTransition
@@ -37,10 +42,14 @@ object Effectors {
   }
 
   case class Defend(_duration: Int = 1) extends Effector(_duration) {
+    override def adaptType: Identifilable = Defence
+
     override def activate: Int => Int = (defence: Int) => defence + 2
   }
 
   case class TwinHits(_duration: Int = 2) extends Spell(_duration) {
+    override def adaptType: Identifilable = Attack
+
     override def activate: Int => Int = (attack: Int) => attack * 3 / 2
 
     override def advance: Effector = duration match {

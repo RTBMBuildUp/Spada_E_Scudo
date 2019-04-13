@@ -10,9 +10,9 @@ class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: L
 
   def hp: Int = _status.hp
 
-  def attack: Int = effectLst.foldLeft(equipment.weapon.activate(this._status.attack))((res, effect) => effect.activate(res))
+  def attack: Int = effectLst.filter(_.adaptType == Attack).foldLeft(equipment.weapon.activate(this._status.attack))((res, effect) => effect.activate(res))
 
-  def defend: Int = effectLst.foldLeft(equipment.armor.activate(this._status.defence))((res, effect) => effect.activate(res))
+  def defend: Int = effectLst.filter(_.adaptType == Defence).foldLeft(equipment.armor.activate(this._status.defence))((res, effect) => effect.activate(res))
 
   def speed: Int = _status.speed
 
