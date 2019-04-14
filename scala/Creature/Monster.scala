@@ -24,14 +24,17 @@ class Monster(_name: String, _status: Status, _effectLst: List[Effector] = Nil) 
 
     Monster(
       _name,
-      Status((func(_status.intMap(identificatable.identify)) :: lst.reverse).reverse),
+      Status(_status.intMap + (identificatable -> func(_status.intMap(identificatable)))),
       effectLst
     )
   }
 
   override def effectLst: List[Effector] = _effectLst
 
-  override def addEffect(effect: Effector): Creature = Monster(name, _status, effect :: effectLst)
+  override def applyEffect(effect: Effector): Creature = effect.adaptType match {
+    case HP => this.flucstrateStatus(effect.adaptType, effect.activate)
+    case _ => Monster(_name, _status, effect :: effectLst)
+  }
 
   override def clearEffect: Creature =
     Monster(

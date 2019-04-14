@@ -16,7 +16,7 @@ class Wizard(_name: String, _status: Status, equipment: Equipment, _spellLst: Li
 
     Wizard(
       _name,
-      Status((func(_status.intMap(identificatable.identify)) :: lst.reverse).reverse),
+      Status((func(_status.intMap(identificatable)) :: lst.reverse).reverse),
       equipment,
       spellLst,
       effectLst
@@ -25,11 +25,11 @@ class Wizard(_name: String, _status: Status, equipment: Equipment, _spellLst: Li
 
 
   override def chant(spell: Effector, target: Creature, participantMap: Map[String, Creature]): Map[String, Creature] =
-    participantMap + CreatureUtility.creatureToMapElem(target.addEffect(spell))
+    participantMap + CreatureUtility.creatureToMapElem(target.applyEffect(spell))
 
   override def clearEffect: Creature = Wizard(_name, _status, equipment, _spellLst)
 
-  override def addEffect(effect: Effector): Creature = Wizard(_name, _status, equipment, _spellLst, effect :: effectLst)
+  override def applyEffect(effect: Effector): Creature = Wizard(_name, _status, equipment, _spellLst, effect :: effectLst)
 }
 
 object Wizard {

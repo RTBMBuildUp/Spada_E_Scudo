@@ -19,7 +19,7 @@ abstract class Creature extends Attackable with Defendable with Identifilable {
 
   def chant(spell: Effector, target: Creature, participantMap: Map[String, Creature]): Map[String, Creature] = participantMap
 
-  def addEffect(effect: Effector): Creature
+  def applyEffect(effect: Effector): Creature
 
   def clearEffect: Creature
 

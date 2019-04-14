@@ -20,12 +20,12 @@ class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: L
 
   override def name: String = _name
 
-  override def flucstrateStatus(identificatable: Identifilable, func: Int => Int): Creature = {
+  override def flucstrateStatus(identifilable: Identifilable, func: Int => Int): Creature = {
     val lst = _status.intMap.unzip._2.toList
 
     Person(
       _name,
-      Status((func(_status.intMap(identificatable.identify)) :: lst.reverse).reverse),
+      Status(_status.intMap + (identifilable -> func(_status.intMap(identifilable)))),
       equipment,
       effectLst
     )
@@ -33,7 +33,12 @@ class Person(_name: String, _status: Status, equipment: Equipment, _effectLst: L
 
   override def effectLst: List[Effector] = _effectLst
 
-  override def addEffect(effect: Effector): Creature = Person(_name, _status, equipment, effect :: effectLst)
+  override def applyEffect(effect: Effector): Creature = effect.adaptType match {
+    case HP =>
+      println("damage")
+      this.flucstrateStatus(effect.adaptType, effect.activate)
+    case _ => Person(_name, _status, equipment, effect :: effectLst)
+  }
 
   override def clearEffect: Creature =
     Person(
