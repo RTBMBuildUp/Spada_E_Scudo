@@ -1,6 +1,5 @@
 package Status
 
-import Effector.Effectors
 import Identifilable.Identifilable
 
 class Status(_intMap: Map[Identifilable, Int]) {
@@ -44,5 +43,3 @@ case object Defence extends Identifilable {
 case object Speed extends Identifilable {
   def identify: String = "Speed"
 }
-
-

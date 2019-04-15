@@ -66,6 +66,8 @@ case object CombatPhase extends Phase {
 }
 
 case object EndPhase extends Phase {
-  override def start(scheduler: Scheduler): Scheduler =
-    Scheduler(scheduler.participantMap.map(tuple => (tuple._1, tuple._2.clearEffect)), MainPhase)
+  override def start(scheduler: Scheduler): Scheduler = {
+    scheduler.participantMap.toList.unzip._2.map(_.hp).foreach(println)
+    Scheduler(scheduler.participantMap.map(tuple => (tuple._1, tuple._2.clearEffect)).toList.sortWith((l, r) => l._2.speed < r._2.speed).toMap, MainPhase)
+  }
 }

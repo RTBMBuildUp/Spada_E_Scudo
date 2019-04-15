@@ -47,18 +47,48 @@ object Effectors {
     override def activate: Int => Int = (defence: Int) => defence + 2
   }
 
-  case class TwinHits(_duration: Int = 2) extends Spell(_duration) {
+  case class Oomph(_duration: Int = 2) extends Spell(_duration) {
     override def adaptType: Identifilable = Attack
 
     override def activate: Int => Int = (attack: Int) => attack * 3 / 2
 
     override def advance: Effector = duration match {
       case 1 => NoEffect
-      case num => TwinHits(num - 1)
+      case num => Oomph(num - 1)
     }
 
-    override def identify: String = "twin_hits"
+    override def identify: String = "oomph"
 
     override def startMessage: String = "攻撃力がアップ"
+  }
+
+  case class Frizz(_duration: Int = 1) extends Spell(_duration) {
+    override def adaptType: Identifilable = HP
+
+    override def activate: Int => Int = (hp: Int) => hp - 3
+
+    override def advance: Effector = duration match {
+      case 1 => NoEffect
+      case num => Frizz(num - 1)
+    }
+
+    override def identify: String = "Frizz"
+
+    override def startMessage: String = "メラ"
+  }
+
+  case class Acceleratle(_duration: Int = 1) extends Spell(_duration) {
+    override def adaptType: Identifilable = Speed
+
+    override def activate: Int => Int = (speed: Int) => speed + 2
+
+    override def advance: Effector = duration match {
+      case 1 => NoEffect
+      case num => Acceleratle(num - 1)
+    }
+
+    override def identify: String = "acceleratle"
+
+    override def startMessage: String = "ピオリム"
   }
 }
