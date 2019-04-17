@@ -25,7 +25,7 @@ case object Defend extends Action with Identifilable {
     val defender = participantMap(defenderName)
 
     println(defenderName + "は防御した。")
-    participantMap + CreatureUtility.creatureToMapElem(defender.applyEffect(Effectors.Defend()))
+    participantMap + CreatureUtility.creatureToMapElem(defender.applyEffect(Effectors.Defend))
   }
 
   override def identify: String = "defend"
@@ -37,7 +37,6 @@ case object Chant extends Action with Identifilable {
     val target = participantMap(targetName)
 
     println(wizardName + "は" + targetName + "に" + spell.identify + "を唱えた")
-    println(target + "の" + spell.startMessage + "した")
     participantMap ++ wizard.chant(spell, target, participantMap)
   }
 

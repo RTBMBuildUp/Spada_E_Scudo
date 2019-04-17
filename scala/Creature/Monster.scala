@@ -1,10 +1,10 @@
 package Creature
 
-import Effector.{Effector, Effectors, Spell}
+import Effector.{Effector, Effectors, Spell, Transitionable}
 import Identifilable.Identifilable
 import Status._
 
-class Monster(_name: String, _status: Status, _effectLst: List[Effector] = Nil) extends Creature {
+class Monster(_name: String, _status: Status, _transitionableEffectLst: List[Effector with Transitionable] = Nil) extends Creature {
   override def identify: String = "monster"
 
   def hp: Int = _status.hp
@@ -25,25 +25,25 @@ class Monster(_name: String, _status: Status, _effectLst: List[Effector] = Nil) 
     Monster(
       _name,
       Status(_status.intMap + (identificatable -> func(_status.intMap(identificatable)))),
-      effectLst
+      transitionableEffectorLst
     )
   }
 
-  override def effectLst: List[Effector] = _effectLst
+  override def transitionableEffectorLst: List[Effector with Transitionable] = _transitionableEffectLst
 
-  override def applyEffect(effect: Effector): Creature = effect.adaptType match {
-    case HP => this.flucstrateStatus(effect.adaptType, effect.activate)
-    case _ => Monster(_name, _status, effect :: effectLst)
+  override def applyEffect(effect: Effector): Creature = effect match {
+    case transitionableEffector: Effector with Transitionable => Monster(_name, _status, transitionableEffector :: transitionableEffectorLst)
+    case _ => this.flucstrateStatus(effect.adaptType, effect.activate)
   }
 
   override def clearEffect: Creature =
     Monster(
       name,
       _status,
-      effectLst.map(effect => effect.advance).filter(_ != Effectors.NoEffect)
+      transitionableEffectorLst.map(effect => effect.advance).filter(_ != Effectors.NoEffect)
     )
 }
 
 object Monster {
-  def apply(name: String, status: Status, effectLst: List[Effector] = Nil): Monster = new Monster(name, status, effectLst)
+  def apply(name: String, status: Status, transitionableEffectLst: List[Effector with Transitionable] = Nil): Monster = new Monster(name, status, transitionableEffectLst)
 }

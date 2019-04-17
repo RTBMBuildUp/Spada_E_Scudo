@@ -3,92 +3,69 @@ package Effector
 import Identifilable.Identifilable
 import Status._
 
-abstract class Effector(private val _duration: Int = 1) {
-  protected val duration: Int = if (_duration < 1) 1 else _duration
-
-  def adaptType: Identifilable = ???
-
+trait Effector {
   def activate: Int => Int
 
-  def advance: Effector = Effectors.NoEffect
-
-  def advance(apply: Int => Effector): Effector = duration match {
-    case 1 => Effectors.NoEffect
-    case num => apply(num - 1)
-  }
+  def adaptType: Identifilable
 }
 
-abstract class Spell(duration: Int) extends Effector(duration) with Identifilable {
-  def startMessage: String
+trait Transitionable {
+  def advance: Effector with Transitionable
 }
 
-object Spell {
-  def apply(duration: Int, _adaptType: Identifilable, activateFunc: Int => Int, _stateTransition: Effector, _spellName: String, _message: String): Spell = new Spell(duration) {
-    override def adaptType: Identifilable = _adaptType
-
-    override def activate: Int => Int = activateFunc
-
-    override def advance: Effector = _stateTransition
-
-    override def identify: String = _spellName
-
-    override def startMessage: String = _message
-  }
-}
+trait Spell extends Effector with Identifilable
 
 object Effectors {
-  case object NoEffect extends Effector {
+  object NoEffect extends Effector with Transitionable {
     override def activate: Int => Int = ???
+
+    override def adaptType: Identifilable = ???
+
+    override def advance: Effector with Transitionable = NoEffect
   }
 
-  case class Defend(_duration: Int = 1) extends Effector(_duration) {
-    override def adaptType: Identifilable = Defence
-
+  case object Defend extends Effector {
     override def activate: Int => Int = (defence: Int) => defence + 2
+
+    override def adaptType: Identifilable = Defence
   }
 
-  case class Oomph(_duration: Int = 2) extends Spell(_duration) {
-    override def adaptType: Identifilable = Attack
+  case object Frizz extends Spell {
+    override def activate: Int => Int = (hp: Int) => hp - 10
 
-    override def activate: Int => Int = (attack: Int) => attack * 3 / 2
-
-    override def advance: Effector = duration match {
-      case 1 => NoEffect
-      case num => Oomph(num - 1)
-    }
-
-    override def identify: String = "oomph"
-
-    override def startMessage: String = "攻撃力がアップ"
-  }
-
-  case class Frizz(_duration: Int = 1) extends Spell(_duration) {
     override def adaptType: Identifilable = HP
 
-    override def activate: Int => Int = (hp: Int) => hp - 3
-
-    override def advance: Effector = duration match {
-      case 1 => NoEffect
-      case num => Frizz(num - 1)
-    }
-
-    override def identify: String = "Frizz"
-
-    override def startMessage: String = "メラ"
+    override def identify: String = "frizz"
   }
 
-  case class Acceleratle(_duration: Int = 1) extends Spell(_duration) {
-    override def adaptType: Identifilable = Speed
+  case class Acceleratle(_duration: Int = 3) extends Spell with Transitionable {
+    def duration: Int = if (_duration < 0) 0 else duration
 
     override def activate: Int => Int = (speed: Int) => speed + 2
 
-    override def advance: Effector = duration match {
-      case 1 => NoEffect
+    override def adaptType: Identifilable = Speed
+
+    override def identify: String = "Acceleratle"
+
+    override def advance: Effector with Transitionable = duration match {
+      case 0 => NoEffect
       case num => Acceleratle(num - 1)
     }
-
-    override def identify: String = "acceleratle"
-
-    override def startMessage: String = "ピオリム"
   }
+
+  case class Oomph(_duration: Int = 2) extends Spell with Transitionable {
+    def duration: Int = if (_duration < 0) 0 else _duration
+
+    override def activate: Int => Int = (attack: Int) => attack * 3 / 2
+
+    override def adaptType: Identifilable = Attack
+
+    override def identify: String = "oomph"
+
+    override def advance: Effector with Transitionable = duration match {
+      case 0 => NoEffect
+      case num => Oomph(num - 1)
+    }
+  }
+
 }

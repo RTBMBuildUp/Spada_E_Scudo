@@ -1,6 +1,6 @@
 package Creature
 
-import Effector.{Effector, Spell}
+import Effector.{Effector, Spell, Transitionable}
 import Identifilable.Identifilable
 import Status.HP
 
@@ -13,11 +13,11 @@ abstract class Creature extends Attackable with Defendable with Identifilable {
 
   def isAlive: Boolean = 0 < hp
 
-  def effectLst: List[Effector]
+  def transitionableEffectorLst: List[Effector with Transitionable]
 
   def spellLst: List[Spell]
 
-  def chant(spell: Effector, target: Creature, participantMap: Map[String, Creature]): Map[String, Creature] = participantMap
+  def chant(spell: Spell, target: Creature, participantMap: Map[String, Creature]): Map[String, Creature] = participantMap
 
   def applyEffect(effect: Effector): Creature
 

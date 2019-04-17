@@ -16,7 +16,7 @@ object Main {
       "maribel",
       Status(Map[Identifilable, Int](HP -> 10, Attack -> 1, Defence -> 1, Speed -> 2)),
       Equipment(),
-      List(Effectors.Oomph(), Effectors.Frizz(), Effectors.Acceleratle())
+      List(Effectors.Oomph(), Effectors.Frizz, Effectors.Acceleratle())
     )
 
     Game.start(List(arusu, kifa, maribel))
