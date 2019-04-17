@@ -2,6 +2,7 @@ package GameManage.FlowManage.Action
 
 import Creature.{Attackable, Creature, CreatureUtility}
 import Effector.{Effectors, Spell}
+import GameManage.ParticipantMap.ParticipantMap
 import Identifilable.Identifilable
 
 import scala.collection.immutable.Map
@@ -9,19 +10,21 @@ import scala.collection.immutable.Map
 trait Action extends Identifilable
 
 case object Attack extends Action with Identifilable {
-  def execute(attackerName: String, targetName: String, participantMap: Map[String, Creature]): Map[String, Creature] = {
+  def execute(attackerName: String, targetName: String, participantMap: ParticipantMap): ParticipantMap = {
     val attacker: Attackable = participantMap(attackerName)
     val target: Creature = participantMap(targetName)
 
-    println(attackerName + "の攻撃。")
-    participantMap + CreatureUtility.creatureToMapElem(target.damage(attacker))
+    if (participantMap(attackerName).isAlive) {
+      println(attackerName + "の攻撃。")
+      participantMap + CreatureUtility.creatureToMapElem(target.damage(attacker))
+    } else participantMap
   }
 
   override def identify: String = "attack"
 }
 
 case object Defend extends Action with Identifilable {
-  def execute(defenderName: String, participantMap: Map[String, Creature]): Map[String, Creature] = {
+  def execute(defenderName: String, participantMap: ParticipantMap): ParticipantMap = {
     val defender = participantMap(defenderName)
 
     println(defenderName + "は防御した。")
@@ -32,7 +35,7 @@ case object Defend extends Action with Identifilable {
 }
 
 case object Chant extends Action with Identifilable {
-  def execute(wizardName: String, spell: Spell, targetName: String, participantMap: Map[String, Creature]): Map[String, Creature] = {
+  def execute(wizardName: String, spell: Spell, targetName: String, participantMap: ParticipantMap): ParticipantMap = {
     val wizard = participantMap(wizardName)
     val target = participantMap(targetName)
 

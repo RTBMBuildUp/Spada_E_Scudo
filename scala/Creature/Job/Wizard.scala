@@ -2,6 +2,7 @@ package Creature.Job
 
 import Creature.{Creature, CreatureUtility, Person}
 import Effector.{Effector, Spell, Transitionable}
+import GameManage.ParticipantMap.ParticipantMap
 import Identifilable.Identifilable
 import _root_.Effector.Equipment.Equipment
 import Status.Status
@@ -23,7 +24,7 @@ class Wizard(_name: String, _status: Status, equipment: Equipment, _spellLst: Li
     )
   }
 
-  override def chant(spell: Spell, target: Creature, participantMap: Map[String, Creature]): Map[String, Creature] =
+  override def chant(spell: Spell, target: Creature, participantMap: ParticipantMap): ParticipantMap =
     participantMap + CreatureUtility.creatureToMapElem(target.applyEffect(spell))
 
   override def clearEffect: Creature = Wizard(_name, _status, equipment, _spellLst)

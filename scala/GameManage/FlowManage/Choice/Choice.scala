@@ -4,13 +4,14 @@ import Creature.Creature
 import Effector.Spell
 import Identifilable.Identifilable
 import GameManage.FlowManage._
+import GameManage.ParticipantMap.ParticipantMap
 
 trait Choice {
-  def declareTarget(executerName: String, participantMap: Map[String, Creature], readFunc: () => String): Map[String, Creature] => Map[String, Creature]
+  def declareTarget(executerName: String, participantMap: ParticipantMap, readFunc: () => String): ParticipantMap => ParticipantMap
 }
 
 case object Attack extends Choice with Identifilable {
-  override def declareTarget(executerName: String, participantMap: Map[String, Creature], readFunc: () => String): Map[String, Creature] => Map[String, Creature] = {
+  override def declareTarget(executerName: String, participantMap: ParticipantMap, readFunc: () => String): ParticipantMap => ParticipantMap = {
     val enemyNameLst = participantMap.toList.unzip._1.filter(_ != executerName)
     def declare: String = {
       val key = readFunc()
@@ -28,7 +29,7 @@ case object Attack extends Choice with Identifilable {
 }
 
 case object Chant extends Choice with Identifilable {
-  override def declareTarget(executerName: String, participantMap: Map[String, Creature], readFunc: () => String): Map[String, Creature] => Map[String, Creature] = {
+  override def declareTarget(executerName: String, participantMap: ParticipantMap, readFunc: () => String): ParticipantMap => ParticipantMap = {
     def declareSpell: Spell = {
       val spellName = readFunc()
       participantMap(executerName).spellLst.filter(_.identify == spellName) match {
@@ -56,7 +57,7 @@ case object Chant extends Choice with Identifilable {
 }
 
 case object Defend extends Choice with Identifilable {
-  override def declareTarget(executerName: String, participantMap: Map[String, Creature], readFunc: () => String): Map[String, Creature] => Map[String, Creature] =
+  override def declareTarget(executerName: String, participantMap: ParticipantMap, readFunc: () => String): ParticipantMap => ParticipantMap =
     Action.Defend.execute(executerName, _)
 
   override def identify: String = "defend"
