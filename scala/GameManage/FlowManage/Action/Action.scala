@@ -5,11 +5,9 @@ import Effector.{Effectors, Spell}
 import GameManage.ParticipantMap.ParticipantMap
 import Identifilable.Identifilable
 
-import scala.collection.immutable.Map
-
 trait Action extends Identifilable
 
-case object Attack extends Action with Identifilable {
+case object Attack extends Action {
   def execute(attackerName: String, targetName: String, participantMap: ParticipantMap): ParticipantMap = {
     val attacker: Attackable = participantMap(attackerName)
     val target: Creature = participantMap(targetName)
@@ -23,7 +21,7 @@ case object Attack extends Action with Identifilable {
   override def identify: String = "attack"
 }
 
-case object Defend extends Action with Identifilable {
+case object Defend extends Action {
   def execute(defenderName: String, participantMap: ParticipantMap): ParticipantMap = {
     val defender = participantMap(defenderName)
 
@@ -34,7 +32,7 @@ case object Defend extends Action with Identifilable {
   override def identify: String = "defend"
 }
 
-case object Chant extends Action with Identifilable {
+case object Chant extends Action {
   def execute(wizardName: String, spell: Spell, targetName: String, participantMap: ParticipantMap): ParticipantMap = {
     val wizard = participantMap(wizardName)
     val target = participantMap(targetName)

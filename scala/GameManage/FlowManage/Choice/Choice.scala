@@ -1,6 +1,5 @@
 package GameManage.FlowManage.Choice
 
-import Creature.Creature
 import Effector.Spell
 import Identifilable.Identifilable
 import GameManage.FlowManage._
