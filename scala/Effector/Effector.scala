@@ -68,4 +68,15 @@ object Effectors {
     }
   }
 
+  case object Sleep extends Spell with Transitionable {
+    override def activate: Int => Int = ???
+
+    override def adaptType: Identifilable = ???
+
+    override def identify: String = "sleep"
+
+    override def advance: Effector with Transitionable =
+      if ((0 to 30).contains(math.random().toInt % 100)) Sleep else NoEffect
+  }
+
 }
