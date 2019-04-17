@@ -16,7 +16,7 @@ class Wizard(_name: String, _status: Status, equipment: Equipment, _spellLst: Li
 
     Wizard(
       _name,
-      Status((func(_status.intMap(identificatable)) :: lst.reverse).reverse),
+      Status(_status.intMap + (identificatable -> func(_status.intMap(identificatable)))),
       equipment,
       spellLst,
       _transitionableEffectorLst
