@@ -1,6 +1,5 @@
 package GameManage.FlowManage.Phase
 
-import Creature.Creature
 import GameManage.FlowManage.Action.Chant
 import GameManage.FlowManage.Choice.{Choice, Choices}
 import GameManage.FlowManage.{Action, Scheduler}
@@ -19,12 +18,13 @@ case object MainPhase extends Phase {
       def action: (Identifilable, ParticipantMap => ParticipantMap) = {
         val choice = readLine()
         val choiceLst: List[Choice with Identifilable] =
-          if (scheduler.participantMap(executerName).spellLst != Nil) Choices.lst else Choices.lst.filter(_ != Chant)
+          if (scheduler.participantMap(executerName).spellLst != Nil) Choices.lst
+          else Choices.lst.filter(_ != Chant)
 
         choiceLst.filter(_.identify == choice) match {
           case Nil => action
-          case action :: _ =>
-            action -> action.declareTarget(executerName, scheduler.participantMap, readLine)
+          case act :: _ =>
+            act -> act.declareTarget(executerName, scheduler.participantMap, readLine)
         }
       }
 
@@ -35,13 +35,26 @@ case object MainPhase extends Phase {
     val participantNameLst = scheduler.participantMap.toList.unzip._1
     val actionQueue = scheduler.actionQueue
 
-    def makeActionQueue: Queue[ParticipantMap => ParticipantMap] = {
-      val pair = participantNameLst.map(declearAction).partition(_._1 == Action.Defend)
-      val dif = pair._1.map(_._2)
-      val atk = pair._2.map(_._2)
+    def makeActionQueue: Queue[(String, ParticipantMap => ParticipantMap)] = {
+      def actionMap(
+                           participantNameLst: List[String] = participantNameLst,
+                           result: List[(String, (Identifilable, ParticipantMap => ParticipantMap))] = Nil
+                   ): List[(String, (Identifilable, ParticipantMap => ParticipantMap))] = participantNameLst match {
+        case Nil => result
+        case name :: tail =>
+          actionMap(
+            tail,
+            if (scheduler.participantMap(name).isAlive) name -> declearAction(name) :: result else result
+          )
+      }
+
+      val partedActionMap = actionMap().reverse.partition(_._2._1 == Action.Defend)
+      val dif = partedActionMap._1.map(elem => (elem._1, elem._2._2))
+      val atk = partedActionMap._2.map(elem => (elem._1, elem._2._2))
 
       Queue(dif ::: atk: _*)
     }
+
 
     Scheduler(
       scheduler.participantMap,
@@ -54,13 +67,16 @@ case object MainPhase extends Phase {
 case object CombatPhase extends Phase {
   override def start(scheduler: Scheduler): Scheduler = {
     def execute(
-                       actionLst: List[ParticipantMap => ParticipantMap] = scheduler.actionQueue.toList,
+                       actionLst: List[(String, ParticipantMap => ParticipantMap)] = scheduler.actionQueue.toList,
                        participantMap: ParticipantMap = scheduler.participantMap
-               ): ParticipantMap =
-      actionLst match {
-        case Nil => participantMap
-        case action :: tail => execute(tail, action(participantMap))
-      }
+               ): ParticipantMap = actionLst match {
+      case Nil => participantMap
+      case (participantName, act) :: tail =>
+        execute(
+          tail.filter { case (name, _) => participantMap(name).isAlive },
+          if (participantMap(participantName).isAlive) act(participantMap) else participantMap
+        )
+    }
 
     Scheduler(execute(), EndPhase)
   }
@@ -70,7 +86,7 @@ case object EndPhase extends Phase {
   override def start(scheduler: Scheduler): Scheduler = {
     val isAlivingParticipantMap = scheduler.participantMap.toList.filter(tuple => tuple._2.isAlive)
     val clearedEffectParticipantMap = isAlivingParticipantMap.map(tuple => (tuple._1, tuple._2.clearEffect))
-    val sortedParticipantMap = clearedEffectParticipantMap.toList.sortWith((l, r) => l._2.speed < r._2.speed).toMap
+    val sortedParticipantMap = clearedEffectParticipantMap.toList.sortWith((l, r) => l._2.speed > r._2.speed).toMap
 
     scheduler.participantMap.toList.unzip._2.map(_.hp).foreach(println)
     Scheduler(sortedParticipantMap, MainPhase)

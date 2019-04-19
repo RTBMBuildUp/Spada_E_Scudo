@@ -12,10 +12,9 @@ case object Attack extends Action {
     val attacker: Attackable = participantMap(attackerName)
     val target: Creature = participantMap(targetName)
 
-    if (participantMap(attackerName).isAlive) {
-      println(attackerName + "の攻撃。")
-      participantMap + CreatureUtility.creatureToMapElem(target.damage(attacker))
-    } else participantMap
+    println(attackerName + "の攻撃。")
+    participantMap + CreatureUtility.creatureToMapElem(target.damage(attacker))
+
   }
 
   override def identify: String = "attack"
