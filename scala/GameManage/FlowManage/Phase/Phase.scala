@@ -84,8 +84,7 @@ case object CombatPhase extends Phase {
 
 case object EndPhase extends Phase {
   override def start(scheduler: Scheduler): Scheduler = {
-    val isAlivingParticipantMap = scheduler.participantMap.toList.filter(tuple => tuple._2.isAlive)
-    val clearedEffectParticipantMap = isAlivingParticipantMap.map(tuple => (tuple._1, tuple._2.clearEffect))
+    val clearedEffectParticipantMap = scheduler.participantMap.map(tuple => (tuple._1, tuple._2.clearEffect))
     val sortedParticipantMap = clearedEffectParticipantMap.toList.sortWith((l, r) => l._2.speed > r._2.speed).toMap
 
     scheduler.participantMap.toList.unzip._2.map(_.hp).foreach(println)

@@ -14,7 +14,6 @@ case object Attack extends Action {
 
     println(attackerName + "の攻撃。")
     participantMap + CreatureUtility.creatureToMapElem(target.damage(attacker))
-
   }
 
   override def identify: String = "attack"

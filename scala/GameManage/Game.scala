@@ -11,8 +11,15 @@ object Game {
       case nextShedule => process(nextShedule)
     }
 
-    val sortedParticipantLst = participantLst.sortWith((l, r) => l.speed < r.speed)
+    val sortedParticipantLst = participantLst.sortWith((l, r) => l.speed > r.speed)
 
-    process(Scheduler(sortedParticipantLst.foldLeft(Map[String, Creature]())((res, elem) => res + CreatureUtility.creatureToMapElem(elem)), MainPhase))
+    process(
+      Scheduler(
+        sortedParticipantLst
+                .foldLeft(Map[String, Creature]()){
+                  (res, elem) => res + CreatureUtility.creatureToMapElem(elem)
+                }, MainPhase
+      )
+    )
   }
 }
