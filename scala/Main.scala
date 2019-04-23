@@ -2,7 +2,7 @@ import Creature.Job.Wizard
 import Creature.{Creature, Monster, Person}
 import Effector.Effectors
 import Effector.Equipment.Equipment
-import GameManage.Game
+import GameManage._
 import Identifilable._
 import Status._
 
@@ -31,9 +31,11 @@ object Main {
       Status(Map[Identifilable, Int](HP -> 10, Attack -> 3, Defence -> 1, Speed -> 3))
     )
 
-    val enemyLst: List[Creature] = List(slime)
-    val allyLst: List[Creature] = List(arusu, kifa, maribel, melvin)
+    val teamA = List[Creature](arusu, kifa, maribel, melvin)
+    val teamB = List[Creature](slime)
 
-    Game.start(List(arusu, kifa, maribel, melvin))
+    Mediator.teams = List(Team("Monster", teamB.map(_.name)), Team("Human", teamA.map(_.name)))
+
+    Game.start(teamA ::: teamB)
   }
 }

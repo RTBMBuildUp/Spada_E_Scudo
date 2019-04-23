@@ -1,5 +1,6 @@
 package Effector
 
+import GameManage.{AllyOnly, EnemyOnly}
 import Identifilable.Identifilable
 import Status._
 
@@ -13,7 +14,9 @@ trait Transitionable {
   def advance: Effector with Transitionable
 }
 
-trait Spell extends Effector with Identifilable
+trait Spell extends Effector with Identifilable {
+  def range(teamName: String): List[String]
+}
 
 object Effectors {
   object NoEffect extends Effector with Transitionable {
@@ -35,6 +38,8 @@ object Effectors {
 
     override def adaptType: Identifilable = HP
 
+    override def range(creatureName: String): List[String] = EnemyOnly.range(creatureName)
+
     override def identify: String = "frizz"
   }
 
@@ -44,6 +49,8 @@ object Effectors {
     override def activate: Int => Int = (speed: Int) => speed + 2
 
     override def adaptType: Identifilable = Speed
+
+    override def range(creatureName: String): List[String] = AllyOnly.range(creatureName)
 
     override def identify: String = "Acceleratle"
 
@@ -60,6 +67,8 @@ object Effectors {
 
     override def adaptType: Identifilable = Attack
 
+    override def range(creatureName: String): List[String] = AllyOnly.range(creatureName)
+
     override def identify: String = "oomph"
 
     override def advance: Effector with Transitionable = duration match {
@@ -72,6 +81,8 @@ object Effectors {
     override def activate: Int => Int = (hp: Int) => if (0 < hp) hp else hp + 3
 
     override def adaptType: Identifilable = HP
+
+    override def range(creatureName: String): List[String] = AllyOnly.range(creatureName)
 
     override def identify: String = "zing"
   }

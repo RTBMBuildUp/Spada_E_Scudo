@@ -24,8 +24,10 @@ case object MainPhase extends Phase {
         choiceLst.filter(_.identify == choice) match {
           case Nil => action
           case act :: _ =>
-            act -> act.declareTarget(executerName, scheduler.participantMap, readLine)
+            act -> act.declareTarget(executerName, scheduler, readLine)
         }
+
+
       }
 
       println(executerName + ": 攻撃するか防御するか呪文を唱えるか。")
@@ -54,7 +56,6 @@ case object MainPhase extends Phase {
 
       Queue(dif ::: atk: _*)
     }
-
 
     Scheduler(
       scheduler.participantMap,

@@ -18,7 +18,8 @@ object Game {
         sortedParticipantLst
                 .foldLeft(Map[String, Creature]()){
                   (res, elem) => res + CreatureUtility.creatureToMapElem(elem)
-                }, MainPhase
+                },
+        MainPhase
       )
     )
   }
