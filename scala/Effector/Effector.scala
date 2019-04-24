@@ -1,6 +1,6 @@
 package Effector
 
-import GameManage.{AllyOnly, EnemyOnly}
+import GameManage.Team.{AllyOnly, EnemyOnly}
 import Identifilable.Identifilable
 import Status._
 

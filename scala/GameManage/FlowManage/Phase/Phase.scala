@@ -1,10 +1,8 @@
 package GameManage.FlowManage.Phase
 
-import GameManage.FlowManage.Action.Chant
-import GameManage.FlowManage.Choice.{Choice, Choices}
+import GameManage.FlowManage.Choice.{Chant, Choice, Choices, Defend}
 import GameManage.FlowManage.{Action, Scheduler}
 import GameManage.ParticipantMap.ParticipantMap
-import Identifilable.Identifilable
 
 import scala.collection.immutable.Queue
 
@@ -14,20 +12,19 @@ trait Phase {
 
 case object MainPhase extends Phase {
   override def start(scheduler: Scheduler): Scheduler = {
-    def declearAction(executerName: String): (Identifilable, ParticipantMap => ParticipantMap) = {
-      def action: (Identifilable, ParticipantMap => ParticipantMap) = {
-        val choice = readLine()
-        val choiceLst: List[Choice with Identifilable] =
-          if (scheduler.participantMap(executerName).spellLst != Nil) Choices.lst
-          else Choices.lst.filter(_ != Chant)
+    def declearAction(executerName: String): (Choice, ParticipantMap => ParticipantMap) = {
+      def action: (Choice, ParticipantMap => ParticipantMap) = {
+        val key = readLine()
 
-        choiceLst.filter(_.identify == choice) match {
-          case Nil => action
-          case act :: _ =>
-            act -> act.declareTarget(executerName, scheduler, readLine)
+        Choices.find(key) match {
+          case None => action
+          case Some(value)
+            if value == Chant &&
+                    scheduler.participantMap(executerName).spellLst.isEmpty =>
+            action
+          case Some(value) =>
+            value -> value.declareTarget(executerName, scheduler, readLine)
         }
-
-
       }
 
       println(executerName + ": 攻撃するか防御するか呪文を唱えるか。")
@@ -40,8 +37,8 @@ case object MainPhase extends Phase {
     def makeActionQueue: Queue[(String, ParticipantMap => ParticipantMap)] = {
       def actionMap(
                            participantNameLst: List[String] = participantNameLst,
-                           result: List[(String, (Identifilable, ParticipantMap => ParticipantMap))] = Nil
-                   ): List[(String, (Identifilable, ParticipantMap => ParticipantMap))] = participantNameLst match {
+                           result: List[(String, (Choice, ParticipantMap => ParticipantMap))] = Nil
+                   ): List[(String, (Choice, ParticipantMap => ParticipantMap))] = participantNameLst match {
         case Nil => result
         case name :: tail =>
           actionMap(
@@ -50,7 +47,7 @@ case object MainPhase extends Phase {
           )
       }
 
-      val partedActionMap = actionMap().reverse.partition(_._2._1 == Action.Defend)
+      val partedActionMap = actionMap().reverse.partition(_._2._1 == Choices.find("Defend").get)
       val dif = partedActionMap._1.map(elem => (elem._1, elem._2._2))
       val atk = partedActionMap._2.map(elem => (elem._1, elem._2._2))
 

@@ -1,5 +1,7 @@
 package GameManage.FlowManage.Choice
 
 object  Choices {
-  def lst = List(Attack, Defend, Chant)
+  private def ChoiceMap = Map("Attack" -> Attack, "Defend" -> Defend, "Chant" -> Chant)
+
+  def find(key: String): Option[Choice] = ChoiceMap.get(key)
 }

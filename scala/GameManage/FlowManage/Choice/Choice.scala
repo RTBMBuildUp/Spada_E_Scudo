@@ -3,8 +3,8 @@ package GameManage.FlowManage.Choice
 import Effector.Spell
 import Identifilable.Identifilable
 import GameManage.FlowManage._
-import GameManage.{EnemyOnly, Mediator, Team}
 import GameManage.ParticipantMap.ParticipantMap
+import GameManage.Team.EnemyOnly
 
 trait Choice {
   def declareTarget(executerName: String, scheduler: Scheduler, readFunc: () => String): ParticipantMap => ParticipantMap

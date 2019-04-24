@@ -3,7 +3,7 @@ package Status
 import Identifilable.Identifilable
 
 class Status(_intMap: Map[Identifilable, Int]) {
-  val intMap: Map[Identifilable, Int] = _intMap
+  def intMap: Map[Identifilable, Int] = _intMap
 
   private def get(key: Identifilable): Int = intMap.toList.filter(_._1 == key) match {
     case Nil => 0
