@@ -5,7 +5,7 @@ import Effector.{Effectors, Spell}
 import GameManage.ParticipantMap.ParticipantMap
 import Identifilable.Identifilable
 
-trait Action extends Identifilable
+trait Action
 
 case object Attack extends Action {
   def execute(attackerName: String, targetName: String, participantMap: ParticipantMap): ParticipantMap = {
@@ -15,8 +15,6 @@ case object Attack extends Action {
     println(attackerName + "の攻撃。")
     participantMap + CreatureUtility.creatureToMapElem(target.damage(attacker))
   }
-
-  override def identify: String = "attack"
 }
 
 case object Defend extends Action {
@@ -26,8 +24,6 @@ case object Defend extends Action {
     println(defenderName + "は防御した。")
     participantMap + CreatureUtility.creatureToMapElem(defender.applyEffect(Effectors.Defend))
   }
-
-  override def identify: String = "defend"
 }
 
 case object Chant extends Action {
@@ -38,8 +34,4 @@ case object Chant extends Action {
     println(wizardName + "は" + targetName + "に" + spell.identify + "を唱えた")
     participantMap ++ wizard.chant(spell, target, participantMap)
   }
-
-  override def identify: String = "chant"
 }
-
-

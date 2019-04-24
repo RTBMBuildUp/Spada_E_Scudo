@@ -5,8 +5,6 @@ import Identifilable.Identifilable
 import Status._
 
 class Monster(_name: String, _status: Status, _transitionableEffectLst: List[Effector with Transitionable] = Nil) extends Creature {
-  override def identify: String = "monster"
-
   def hp: Int = _status.hp
 
   def attack: Int = this._status.attack

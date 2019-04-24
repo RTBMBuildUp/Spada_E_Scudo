@@ -8,8 +8,6 @@ import _root_.Effector.Equipment.Equipment
 import Status.Status
 
 class Wizard(_name: String, _status: Status, equipment: Equipment, _spellLst: List[Spell], _transitionableEffectorLst: List[Effector with Transitionable] = Nil) extends Person(_name, _status, equipment, _transitionableEffectorLst) {
-  override def identify: String = "wizard"
-
   override def spellLst: List[Spell] = _spellLst
 
   override def flucstrateStatus(identificatable: Identifilable, func: Int => Int): Wizard = {

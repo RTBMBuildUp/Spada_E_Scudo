@@ -1,7 +1,7 @@
 package GameManage.FlowManage.Action
 
-import Identifilable.Identifilable
-
 object Actions {
-  def lst: List[Action with Identifilable] = List(Attack, Defend, Chant)
+  private def ActionMap = Map("Attack" -> Attack, "Defend" -> Defend, "Chant" -> Chant)
+
+  def find(key: String): Option[Action] = ActionMap.get(key)
 }

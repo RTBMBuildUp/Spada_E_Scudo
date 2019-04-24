@@ -6,8 +6,6 @@ import Identifilable.Identifilable
 import Status._
 
 class Person(_name: String, _status: Status, equipment: Equipment, _transitionableEffectorLst: List[Effector with Transitionable] = Nil) extends Creature {
-  override def identify: String = "person"
-
   def hp: Int = _status.hp
 
   def attack: Int = transitionableEffectorLst.filter(_.adaptType == Attack).foldLeft(equipment.weapon.activate(this._status.attack))((res, effect) => effect.activate(res))

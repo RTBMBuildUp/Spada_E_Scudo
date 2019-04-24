@@ -5,7 +5,7 @@ import GameManage.ParticipantMap.ParticipantMap
 import Identifilable.Identifilable
 import Status.HP
 
-abstract class Creature extends Attackable with Defendable with Identifilable {
+abstract class Creature extends Attackable with Defendable {
   def name: String
 
   def hp: Int

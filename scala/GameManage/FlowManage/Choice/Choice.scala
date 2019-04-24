@@ -10,7 +10,7 @@ trait Choice {
   def declareTarget(executerName: String, scheduler: Scheduler, readFunc: () => String): ParticipantMap => ParticipantMap
 }
 
-case object Attack extends Choice with Identifilable {
+case object Attack extends Choice {
   override def declareTarget(executerName: String, scheduler: Scheduler, readFunc: () => String): ParticipantMap => ParticipantMap = {
     val participantMap = scheduler.participantMap
     val enemyNameLst = EnemyOnly.range(executerName)
@@ -26,11 +26,9 @@ case object Attack extends Choice with Identifilable {
 
     Action.Attack.execute(executerName, target, _)
   }
-
-  override def identify: String = "attack"
 }
 
-case object Chant extends Choice with Identifilable {
+case object Chant extends Choice {
   override def declareTarget(executerName: String, scheduler: Scheduler, readFunc: () => String): ParticipantMap => ParticipantMap = {
     def declareSpell: Spell = {
       val spellName = readFunc()
@@ -54,14 +52,10 @@ case object Chant extends Choice with Identifilable {
 
     Action.Chant.execute(executerName, useSpell, targetName, _)
   }
-
-  override def identify: String = "chant"
 }
 
-case object Defend extends Choice with Identifilable {
+case object Defend extends Choice {
   override def declareTarget(executerName: String, scheduler: Scheduler, readFunc: () => String): ParticipantMap => ParticipantMap =
     Action.Defend.execute(executerName, _)
-
-  override def identify: String = "defend"
 }
 
