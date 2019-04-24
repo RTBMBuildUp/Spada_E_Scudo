@@ -1,4 +1,4 @@
-package GameManage
+package GameManage.Team
 
 trait TargetSelectedRange {
   def range(creatureName: String): List[String]
